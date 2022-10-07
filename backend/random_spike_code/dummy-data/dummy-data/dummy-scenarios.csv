@@ -1,0 +1,19 @@
+#     By its use of the model (the "Model") provided by ISO New England
+#     Inc. ("ISO-NE"), the user agrees and acknowledges as follows:  ISO-NE
+#     has provided the Model as a courtesy to facilitate certain aspects of
+#     application development and should not be relied upon for arriving at any
+#     official determinations pertaining to the Model. The Model is provided
+#     on an "AS IS" basis with all faults and defects and without warranty
+#     of any kind. ISO-NE  to the fullest extent permitted by law, disclaims
+#     all warranties, either express or implied, statutory or otherwise,
+#     including but not limited to the implied warranties of merchantability,
+#     non-infringement of third parties' rights, and fitness for particular
+#     purpose. Without limiting the foregoing, ISO-NE makes no representations
+#     or warranties about the accuracy, reliability, completeness, or usability
+#     of the Model or related documentation. ISO-NE shall have no liability
+#     of any kind to user or any other third party based on user’s use of
+#     or reliance on the Model.
+SCENARIO_ID,SCENARIO_NAME,AUTHOR_GROUP_ID
+1,Base Case,1
+2,Scenario A,1
+3,Scenario B,1
