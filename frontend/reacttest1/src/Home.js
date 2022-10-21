@@ -13,17 +13,10 @@ function Home() {
         <p> + </p>
         <img src={isologo} className="iso-App-logo" alt="logo" />
         <p>
-          Hello Team. Here's our REACT test.
+          Hello Team. Here's the landing page for our project.
         </p>
-        <a
-          className="App-link"
-          href="https://los-angry-mob.atlassian.net/jira/software/projects/GA320/boards/1"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Lets head to our JIRA
-        </a>
-        <Link to="/graph">Graph</Link>
+       
+        <Link className="App-link" to="/graph">Graph</Link>
       </header> 
     </div>
 
