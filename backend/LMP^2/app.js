@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const DB_URI = process.env.DB_URI;
 
+//This code connects to our MongoDB through Mongoose, which lets us use Schemas to model data (Schemas make the data more structured)
 mongoose.connect(DB_URI)
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
