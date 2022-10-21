@@ -1,8 +1,11 @@
 import isologo from './ISO Logo clear.png';
 import logo from './logo.svg';
 import './App.css';
+import { Link } from "react-router-dom";
 
-function App() {
+
+
+function Home() {
   return (
     <div className="App">
       <header className="App-header">
@@ -20,9 +23,12 @@ function App() {
         >
           Lets head to our JIRA
         </a>
-      </header>
+        <Link to="/graph">Graph</Link>
+      </header> 
     </div>
+
+   
   );
 }
 
-export default App;
+export default Home;
