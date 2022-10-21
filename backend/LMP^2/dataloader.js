@@ -1,10 +1,13 @@
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV == null) {
+    require('dotenv').config(); // Load .env
+  }
+
 const csv = require('csvtojson');
 const filepath = "dummy-data/dummy-node-data.csv"; //Location can be modified later to match actual data location.
 const mongoose = require('mongoose');
 const Data = require('./models/dummyNodeData'); //Schema can be modified later to match actual data schema.
 
-const DB_URI = "mongodb+srv://Victorapple:torch@cluster0.7h8r7kr.mongodb.net/test?retryWrites=true&w=majority"; //This should normally be hidden.
-
+const DB_URI = process.env.DB_URI;
 mongoose.connect(DB_URI);
 
 const db = mongoose.connection;
