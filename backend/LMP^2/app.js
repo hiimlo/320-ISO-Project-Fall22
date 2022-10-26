@@ -14,16 +14,18 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
+//This sets up the Express stuff
 const app = express();
 const apiRoutes = require('./routes/api');
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
+//Home query page
 app.get('/', function(req, res, next) {
     res.render('index');
 });
 
+//API calls get redirected here
 app.use('/api', apiRoutes);
 
 app.listen(3000, () => {
