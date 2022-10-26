@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const NodeData = new Schema({
+const Node = new Schema({
     SCENARIO_ID: Number,
     PNODE_NAME: String,
     PERIOD_ID: Date,
@@ -10,4 +10,4 @@ const NodeData = new Schema({
     versionKey: false
 })
 
-module.exports = mongoose.model('NodeData', NodeData);
+module.exports = mongoose.model('Node', Node);

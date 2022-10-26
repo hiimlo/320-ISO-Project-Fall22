@@ -9,8 +9,8 @@ const group_filepath = "dummy-data/dummy-groups.csv"; //Locations can be modifie
 const scenario_filepath = "dummy-data/dummy-scenarios.csv";
 const node_filepath = "dummy-data/dummy-node-data.csv"; 
 
-const Data = require('./models/dummyNodeData'); //Schemas can be modified later to match actual data schema.
-const Scenario = require('./models/dummyScenario');
+const Node = require('./models/dummyNodes'); //Schemas can be modified later to match actual data schema.
+const Scenario = require('./models/dummyScenarios');
 const Group = require('./models/dummyGroups');
 
 const DB_URI = process.env.DB_URI;
@@ -35,7 +35,7 @@ async function loadData() {
         const scenarios = await csv().fromFile(scenario_filepath);
         const nodes = await csv().fromFile(node_filepath);
 
-        await Data.deleteMany({}); //Empties out the table before importing in the data.
+        await Node.deleteMany({}); //Empties out the table before importing in the data.
         await Group.deleteMany({}); //Empties out the table before importing in the data.
         await Scenario.deleteMany({}); //Empties out the table before importing in the data.
 
@@ -68,14 +68,14 @@ async function loadData() {
         for (i = 0; i < nodes.length; i++) {
             obj = nodes[i];
             scenario = await Scenario.findOne({SCENARIO_ID: Number(obj.SCENARIO_ID)});
-            const data = new Data({
+            const node = new Node({
                 SCENARIO_ID: Number(obj.SCENARIO_ID),
                 PNODE_NAME: obj.PNODE_NAME,
                 PERIOD_ID: dateConverter(obj.PERIOD_ID),
                 LMP: Number(obj.LMP) 
             });
-            scenario.NODES.push(data);
-            await data.save();
+            scenario.NODES.push(node);
+            await node.save();
             await scenario.save();
         }
  

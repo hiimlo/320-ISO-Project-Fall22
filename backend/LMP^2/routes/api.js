@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Data = require('../models/dummyNodeData');
+
+const Data = require('../models/dummyNodes');
+const Scenario = require('./models/dummyScenarios');
+const Group = require('./models/dummyGroups');
+
+router.get('/g', async (req, res, next) => {
+    const groups = await Group.find({});
+    res.send(groups)
+});
 
 router.get('/data', async (req, res, next) => {
     const {pname, scenario, start, end} = req.query;
