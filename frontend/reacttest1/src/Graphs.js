@@ -7,12 +7,14 @@ import { Chart }    from 'react-chartjs-2'
 import { Link } from "react-router-dom";
 //Chart.register(CategoryScale);
 
+
 const data = require('./localhost.json');
 let _id = data.map(function(e) {return e._id});
 let scenario_id = data.map(function(e) {return e.scenario_id});
 let pnode_name = data.map(function(e) {return e.pnode_name});
 let period_id = data.map(function(e) {return e.period_id});
 let lmp = data.map(function(e) { return e.lmp});
+
 let kent = data.filter(function(e) {
   if (e.pnode_name == ".I.KENT    345 2") {
     return e;
@@ -26,7 +28,7 @@ let dataPoint = kent.map(function(e) {
    
   }
 })
-const state = {
+const state1 = {
   labels: pnode_name,
   datasets: [
     {
@@ -38,17 +40,16 @@ const state = {
       options: {
         scales: {
           x: {
-            
-            position: 'bottom'
-          },
-          y: {
-            type: 'linear',
             ticks: {
               // Include a dollar sign in the ticks
               callback: function(value, index, ticks) {
                   return 'Day ' + value;
               }
-          }
+            },
+            position: 'bottom'
+          },
+          y: {
+            beginAtZero: true,
           }
         }
       }
@@ -61,8 +62,8 @@ export default class Graph extends React.Component {
     return (
       <div className="App-header">
       <Link className="App-link" to="/home">Go Home</Link>
-          <Scatter
-            data={state}
+          <Scatter className = "Grapher"
+            data={state1}
             options={{
               title: {
                 display: true,
@@ -72,6 +73,20 @@ export default class Graph extends React.Component {
               legend: {
                 display: true,
                 position: 'right'
+              },
+              scales: {
+                x: {
+                  ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, ticks) {
+                        return 'Day ' + value;
+                    }
+                  },
+                  position: 'bottom'
+                },
+                y: {
+                  beginAtZero: true,
+                }
               }
             }} />
         </div>

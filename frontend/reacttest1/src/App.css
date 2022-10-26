@@ -39,7 +39,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color:#1999d8;
+  background-color:#9f9e9e;
+  font-weight: bold;
+}
+
+.Grapher {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color:#ffffff;
   font-weight: bold;
 }
 
