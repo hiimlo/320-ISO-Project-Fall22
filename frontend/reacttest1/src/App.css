@@ -43,6 +43,16 @@
   font-weight: bold;
 }
 
+.Alert{
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color:#f10000;
+  font-weight: bold;
+}
+
 .Grapher {
   color: #ffffff;
   display: flex;
