@@ -7,6 +7,7 @@ import { BrowserRouter as Router,
 
 import Home from "./Home"
 import Graph from "./Graphs"
+import Stats from "./Stats"
 
 function App() {
   return (
@@ -25,6 +26,11 @@ function App() {
       with exact path "/about", in component 
       props we passes the imported component*/}
       <Route path="/graph" element={<Graph />} />
+
+      {/* This route is for about component 
+      with exact path "/about", in component 
+      props we passes the imported component*/}
+      <Route path="/stats" element={<Stats />} />
      
     
         

@@ -18,13 +18,13 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 69s linear;
+    animation: App-logo-spin infinite 1s linear;
   }
 }
 
 .App-header {
   background-color: #20303b;
-  min-height: 100vh;
+  min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +51,16 @@
   justify-content: center;
   background-color:#f10000;
   font-weight: bold;
+}
+
+.dropdown-menu {
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.DropdownItem {
+  color: #000000;
+  display: inline-block;
 }
 
 .Grapher {

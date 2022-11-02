@@ -1,19 +1,25 @@
 import React from 'react';
+import { useState } from 'react'
 import './App.css';
 import { Scatter } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart } from 'react-chartjs-2'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 //Chart.register(CategoryScale);
 
 
 const data = require('./localhost.json');
+const nodeList = data.map(x => x.pnode_name);
 
 export default class Graph extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {node: '.I.KENT    345 2'};
+    this.state = { node: '.I.KENT    345 2' };
     this.changeNode = this.changeNode.bind(this);
   }
 
@@ -30,7 +36,7 @@ export default class Graph extends React.Component {
         return e;
       }
     })
-    
+
     let dataPoint = node.map(function (e) {
       return {
         x: e.period_id.charCodeAt(e.period_id.length - 1) - 48,
@@ -52,45 +58,51 @@ export default class Graph extends React.Component {
     }
     return graphState;
   }
-
   render() {
     return (
-      <div className="App-header">
-        <Link className="App-link" to="/home">Go Home</Link>
-        <div className="Alert">NOTE: this is dummy for a proof of concept</div>
-        <button onClick = {event => this.changeNode(event, '.I.KENT    345 2')}>.I.KENT    345 2</button>
-        <button onClick = {event => this.changeNode(event, '.I.PARKCITY345 1')}>.I.PARKCITY345 1</button>
-        <button onClick = {event => this.changeNode(event, '.I.VICTORIA345 1')}>.I.VICTORIA345 1</button>
-        <div>{this.state.node}</div>
-        <Scatter className="Grapher"
-          data={this.createGraphState()}
-          options={{
-            title: {
-              display: true,
-              text: 'LMP Of Nodes',
-              fontSize: 20
-            },
-            legend: {
-              display: true,
-              position: 'right'
-            },
-            scales: {
-              x: {
-                ticks: {
-                  // Include a dollar sign in the ticks
-                  callback: function (value, index, ticks) {
-                    return 'Day ' + value;
-                  }
-                },
-                position: 'bottom'
+      <div>
+        <div className="App-header">
+          <Link className="App-link" to="/home">Go Home</Link>
+          <div className="Alert">NOTE: this is dummy for a proof of concept</div>
+          <div>{this.state.node}</div>
+        </div>
+        <DropdownButton className="DropdownButton" title="DROP" >
+          {nodeList.map(node =>
+            <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
+              {node}
+            </Dropdown.Item>
+          )}
+        </DropdownButton>
+        <div>
+          <Scatter className="Grapher"
+            data={this.createGraphState()}
+            options={{
+              title: {
+                display: true,
+                text: 'LMP Of Nodes',
+                fontSize: 20
               },
-              y: {
-                beginAtZero: true,
+              legend: {
+                display: true,
+                position: 'right'
+              },
+              scales: {
+                x: {
+                  ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function (value, index, ticks) {
+                      return 'Day ' + value;
+                    }
+                  },
+                  position: 'bottom'
+                },
+                y: {
+                  beginAtZero: true,
+                }
               }
-            }
-          }} />
+            }} />
+        </div>
       </div>
-
     );
   }
 }

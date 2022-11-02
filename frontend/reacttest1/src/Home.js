@@ -1,5 +1,5 @@
-import isologo from './ISO Logo clear.png';
-import logo from './logo.svg';
+import isologo from './images/ISO Logo clear.png';
+import logo from './images/logo.svg';
 import './App.css';
 import { Link } from "react-router-dom";
 
@@ -17,6 +17,7 @@ function Home() {
         </p>
        
         <Link className="App-link" to="/graph">Graph</Link>
+        <Link className="App-link" to="/stats">Stats</Link>
       </header> 
     </div>
 
