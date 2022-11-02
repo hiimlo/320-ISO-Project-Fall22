@@ -8,7 +8,7 @@ const Scenario = new Schema({
     NODES: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'NodeData'
+            ref: 'Node'
         }
     ]
 }, {

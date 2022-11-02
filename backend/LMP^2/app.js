@@ -17,16 +17,17 @@ db.once("open", () => {
 //This sets up the Express stuff
 const app = express();
 const apiRoutes = require('./routes/api');
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
-//Home query page
+//Home query page, not useful rn
 app.get('/', function(req, res, next) {
     res.render('index');
 });
 
 //API calls get redirected here
-app.use('/api', apiRoutes);
+app.use('/', apiRoutes);
 
 app.listen(3000, () => {
     console.log("Serving on port 3000")
