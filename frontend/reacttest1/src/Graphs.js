@@ -3,12 +3,14 @@ import { useState } from 'react'
 import './App.css';
 import { Scatter } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
-import { Chart as ChartJS } from 'chart.js/auto'
-import { Chart } from 'react-chartjs-2'
+
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Chart from "react-apexcharts";
+import Heat from './HeatMap';
+import Histo from './Histogram';
 
 //Chart.register(CategoryScale);
 
@@ -16,6 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const data = require('./localhost.json');
 const nodeList = data.map(x => x.pnode_name);
 
+// Alex first push
 export default class Graph extends React.Component {
   constructor(props) {
     super(props);
@@ -101,6 +104,8 @@ export default class Graph extends React.Component {
                 }
               }
             }} />
+            <Heat />
+            <Histo />
         </div>
       </div>
     );
