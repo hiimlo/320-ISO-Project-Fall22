@@ -125,16 +125,18 @@ export default class Histo extends React.Component {
     render() {
         return (
             <div>
-                <div className="App-header">
+                <div className="sub-header">
                     {/* <Link className="App-link" to="/home">Go Home</Link> */}
                     <div className="Alert">NOTE: this is dummy for a proof of concept</div>
                     <div>{this.state.node}</div>
                 </div>
                 <DropdownButton className="DropdownButton" title="DROP" >
                     {nodeList.map(node =>
-                        <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
-                            {node}
-                        </Dropdown.Item>
+                        <li key = {node.toString()}>
+                            <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
+                                {node}
+                            </Dropdown.Item>
+                         </li>
                     )}
                 </DropdownButton>
                 <div>

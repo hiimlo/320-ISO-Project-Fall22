@@ -15,11 +15,11 @@ import Histo from './Histogram';
 //Chart.register(CategoryScale);
 
 
-const data = require('./localhost.json');
-console.log(data);
-const nodeList = data.map(x => x.pnode_name);
+//const data = require('./localhost.json');
+//console.log(data);
+//const nodeList = data.map(x => x.pnode_name);
 
-const scenario = 3;
+const scenario = 2;
 const url = 'http://localhost:3000/scenarios/'+scenario+'/nodes';
 
 async function fetchJson(url) {
@@ -53,7 +53,7 @@ getChartData = () => {
     fetchJson(url)
         .then(
             (result) => {
-                console.log(result);
+                //console.log(result);
                 this.setState({
                     isLoaded: true,
                     chartData: result,
@@ -83,12 +83,14 @@ componentDidMount() {
   createGraphState() {
     const nodeName = this.state.node;
     let node = this.state.chartData[nodeName];
-    console.log(node);
+    //console.log(node);
     let dataPoint = node.map(function (e) {
       return {
-        x: e.PERIOD_ID.charCodeAt(e.PERIOD_ID.length - 1) - 48,
-        y: e.lmp
+        x: ((e.PERIOD_ID.charCodeAt(11)-48)*10)+e.PERIOD_ID.charCodeAt(12)-48,
+        y: e.LMP
       }
+      
+     
     })
 
     const graphState = {
@@ -110,21 +112,25 @@ componentDidMount() {
       return <div> ERRORRRRR </div>
     } else if (!this.state.isLoaded){
       return (
-        <div> LOADINGGG </div>
+        <div className = "App-header" >
+        <div className = "Alert"> LOADINGGG </div>
+        </div>
       )
     } else {
     return (
       <div>
-        <div className="App-header">
+        <div className="sub-header">
           <Link className="App-link" to="/home">Go Home</Link>
           <div className="Alert">NOTE: this is dummy for a proof of concept</div>
           <div>{this.state.node}</div>
         </div>
         <DropdownButton className="DropdownButton" title="DROP" >
           {this.state.nodeList.map(node =>
+          <li key = {node.toString()}>
             <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
               {node}
             </Dropdown.Item>
+          </li>
           )}
         </DropdownButton>
         <div>
@@ -151,7 +157,7 @@ componentDidMount() {
                   position: 'bottom'
                 },
                 y: {
-                  beginAtZero: true,
+                  beginAtZero: false,
                 }
               }
             }} />
