@@ -19,7 +19,7 @@ import Histo from './Histogram';
 //console.log(data);
 //const nodeList = data.map(x => x.pnode_name);
 
-const scenario = 2;
+const scenario = 3;
 const url = 'http://localhost:3000/scenarios/'+scenario+'/nodes';
 
 async function fetchJson(url) {
@@ -121,7 +121,6 @@ componentDidMount() {
       <div>
         <div className="sub-header">
           <Link className="App-link" to="/home">Go Home</Link>
-          <div className="Alert">NOTE: this is dummy for a proof of concept</div>
           <div>{this.state.node}</div>
         </div>
         <DropdownButton className="DropdownButton" title="DROP" >

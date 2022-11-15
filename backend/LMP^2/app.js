@@ -21,14 +21,16 @@ const apiRoutes = require('./routes/api');
 
 //add cors for API call permissions 
 app.use(cors());
-var whitelist = ['http://localhost:3069', 'http://localhost:3000'];
+var whitelist = ['http://localhost:3069', 'http://localhost:3000','http://192.168.50.141:3069','localhost:'];
 var corsOptions = {
-  origin: function (origin, callback) {
+  origin: function (origin, callback) {/*
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
     }
+    */
+    callback(null,true);
   }
 }
 
@@ -37,6 +39,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
 //Home query page, not useful rn
+//some cors options stuff here too
 app.get('/', cors(corsOptions), function(req, res, next) {
     res.render('index');
 });
