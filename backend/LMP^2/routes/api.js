@@ -26,7 +26,7 @@ let search = async (req, res, next) => {
         Group:  Indicates how the node data is being clustered. By name, region, etc... 
                 Right now, we only have names. Default: None.
         Sort:   Indicates how we will group the data. All, yearly, etc...
-                Should be able to support daily, monthly, quarterly, yearly, and all. Default: daily.
+                Should be able to support daily, monthly, quarterly, yearly, and all. Default: Hourly.
         Metric: Indicates what metric we will report on. 
                 Right now, should just report on LMP. Default: LMP.
         Id:     Relates to how the node data is being clustered. A specific ID associated with the clustering
@@ -62,7 +62,7 @@ let search = async (req, res, next) => {
 
     //Filters by the specified grouping if applicable. Narrowing down to a specific ID if the field id is provided.
     if (group != null) {
-        nodes = _.groupBy(scenario.NODES, (node) => node[group])
+        nodes = _.groupBy(scenario.NODES, (node) => node[group]) //Using Lo Dash cause Lo is based
         if (id != null) {
             nodes = {[id]: nodes[id]};
         }
@@ -73,22 +73,23 @@ let search = async (req, res, next) => {
     //Groups the data by the given time grouping. 
     _.forEach(Object.keys(nodes), (nodeGroup) => {
         nodes[nodeGroup] = _.groupBy(nodes[nodeGroup], function (node) {
-            //This is kind of crude, but works for the time being.
-            const [year, mon, day] = node.PERIOD_ID.toISOString().split(/[-T]/);
+            //Deconstructs stuff for comparison
+            const [year, mon, day, hour] = node.PERIOD_ID.toISOString().split(/[-T:]/);
+            console.log(hour);
             const quarter = Math.floor((2 + parseInt(mon)) / 3);
             switch (sort) {
                 case "ALL":
                     return "ALL";
                 case "YEAR":
-                    return year;
+                    return `${year}`;
                 case "QUARTER":
-                    return year + "-Q" + quarter;
+                    return `${year}-Q${quarter}`;
                 case "MONTH":
-                    return year + "-" + mon;
+                    return `${year}-${mon}`;
                 case "DAY":
-                    return year + "-" + mon + "-" + day;
-                default:
-                    return year + "-" + mon + "-" + day;
+                    return `${year}-${mon}-${day}`;
+                default: //Hourly, uneditted
+                    return year + "-" + mon + "-" + day + ": " + hour;
             }
         }); 
         
