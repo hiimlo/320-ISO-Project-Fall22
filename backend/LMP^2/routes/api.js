@@ -5,11 +5,12 @@ const _ = require('lodash');
 const Scenario = require('../models/dummyScenarios');
 const Data = require('../models/dummyNodes');
 const Group = require('../models/dummyGroups');
+const { values } = require('lodash');
 
 // Gets all scenarios. BF - 3
 router.get('/scenarios', async (req, res, next) => {
     const scenarios = await Scenario.find({});
-    res.send(scenarios);
+    res.send({SCENARIOS: scenarios}); //Modified to be consistent in return objects.
 });
 
 //Gets information about a specific scenario BF - 5
@@ -18,63 +19,103 @@ router.get('/scenarios/:id', async (req, res, next) => {
     res.send(scenario);
 });
 
-//Gets all nodes associated with a specific scenario. Can be tuned by query parameters.
-router.get('/scenarios/:id/nodes', async (req, res, next) => {
-    const {metric, time, name} = req.query;
-    const scenario = await Scenario.findOne({SCENARIO_ID: req.params.id}).populate('NODES');
-    
-    //First, filters by a provided node name if applicable. BF - 7
-    //If no name parameter is provided, return all nodes.
-    let nodes = _.groupBy(scenario.NODES, ({PNODE_NAME}) => PNODE_NAME)
-    if (name != null) {
-        nodes = { [name]: nodes[name]};
-    }
-
-    res.send(nodes);
-
-    //Depending on what time grouping is selected, further sort the data. BF- 5 and BF - 6
-    //If no time metric provided, default is "all".
-    
-    /* TODO: */
-
-    // Ignore the code below. 
-
+let search = async (req, res, next) => { 
     /*
-    nodes.map((node) => {
-        console.log('hi');
-        return 'hi';
+        How this works:
+
+        Group:  Indicates how the node data is being clustered. By name, region, etc... 
+                Right now, we only have names. Default: None.
+        Sort:   Indicates how we will group the data. All, yearly, etc...
+                Should be able to support daily, monthly, quarterly, yearly, and all. Default: daily.
+        Metric: Indicates what metric we will report on. 
+                Right now, should just report on LMP. Default: LMP.
+        Id:     Relates to how the node data is being clustered. A specific ID associated with the clustering
+                method will return information just on that cluster. Ex: Group = PNODE_NAME, id = 'KENT' will
+                report for nodes with just the PNODE_NAME = 'KENT'. 
+                Id does nothing if no Group is specified (Cause all data is treated as one set)
+
+        What it will return:
+
+        Nested JSON object literals in this format:
+        { 
+            NodeGrouping (Ex: If group = PNODE_NAME, NodeGrouping = UN.ALTA 345 UALT)
+            {
+                TimeGrouping (Ex: If sort = QUARTER, TimeGrouping = 2022-Q1 )
+                {    
+                   MEAN: Average of the chosen metric for all nodes in this cluster.
+                   MEDIAN: Median of the chosen metric for all nodes in this cluster.
+                   STD: Standard Deviation of the chosen metric for all nodes in this cluster.
+                }
+            }
+        }
+    */
+    const metric = req.query.metric ?? "LMP";
+    const sort = req.query.sort ?? "NONE";
+    const group = req.params.grouping;
+    const id = req.query.id; //.I.KENT++++345+2
+
+    //Populates all the nodes associated with the scenario.
+    const scenario = await Scenario.findOne({SCENARIO_ID: req.params.id}).populate('NODES');
+
+    //It starts as an array, but it becomes a JSON object literal in the end.
+    let nodes = scenario.NODES;
+
+    //Filters by the specified grouping if applicable. Narrowing down to a specific ID if the field id is provided.
+    if (group != null) {
+        nodes = _.groupBy(scenario.NODES, (node) => node[group])
+        if (id != null) {
+            nodes = {[id]: nodes[id]};
+        }
+    } else {
+        nodes = {"NODES": nodes}; // For consistency  
+    }
+
+    //Groups the data by the given time grouping. 
+    _.forEach(Object.keys(nodes), (nodeGroup) => {
+        nodes[nodeGroup] = _.groupBy(nodes[nodeGroup], function (node) {
+            //This is kind of crude, but works for the time being.
+            const [year, mon, day] = node.PERIOD_ID.toISOString().split(/[-T]/);
+            const quarter = Math.floor((2 + parseInt(mon)) / 3);
+            switch (sort) {
+                case "ALL":
+                    return "ALL";
+                case "YEAR":
+                    return year;
+                case "QUARTER":
+                    return year + "-Q" + quarter;
+                case "MONTH":
+                    return year + "-" + mon;
+                case "DAY":
+                    return year + "-" + mon + "-" + day;
+                default:
+                    return year + "-" + mon + "-" + day;
+            }
+        }); 
+        
+        //Performs aggregate functions on the choosen metric.
+        _.forEach(Object.keys(nodes[nodeGroup]), (timeGroup) => {
+            //Converts all the nodes to just the values specified by the give metric.
+            const values = _.map(nodes[nodeGroup][timeGroup], (node) => node[metric]).sort((x, y) => x - y);
+            const mid = Math.floor(values.length / 2); //For Median calculation
+            const mean = values.reduce((sum, val) => sum + val, 0) / values.length; //For Mean and Standard Deviation calculation
+            nodes[nodeGroup][timeGroup] = 
+            {
+                MEAN: mean,
+                MEDIAN: values.length % 2 != 0 ? values[mid] : (values[mid - 1] + values[mid]) / 2,
+                STD: values.reduce((sum, val) => Math.sqrt(sum ** 2 + (val - mean) ** 2), 0)
+            };
+        });
     });
 
+    //Finally sends the JSON object literal.
     res.send(nodes);
-    
-    let yearly = _.groupBy(nodes, function (obj) {
-        console.log(obj[0]);
-        PERIOD_ID.getFullYear()
-        return "hi"
-    });
-    res.send(yearly);
-    if (time == null) {
-       return nodes;
-    }
-    
-    
-    yearly = _.invokeMap(yearly, function () {
-        let avg = _.meanBy(this, 'LMP').toFixed(2);
-        let i = this[0];
-        return {
-            SCENARIO_ID: i.SCENARIO_ID,
-            PNODE_NAME: i.PNODE_NAME,
-            PERIOD_ID: i.PERIOD_ID,
-            LMP: avg,
-            GROUPING: "YEARLY" 
-        };       
-    });
-    res.send(nodes);
-    
-    if (time == 'yearly') {
-        return _.invokeMap(yearly, (group) => _.meanBy(group, metric))
-    }
-    */
-});
+
+}
+
+//For when no grouping criteria is specified, the entire dataset is treated as one group.
+router.get('/scenarios/:id/nodes', search);
+router.get('/scenarios/:id/nodes/:grouping', search);
+
+
 
 module.exports = router;
