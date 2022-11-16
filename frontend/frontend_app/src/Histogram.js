@@ -112,7 +112,7 @@ export default class Histo extends React.Component {
                 title: {
                     text: 'Histogram of DUMMY DATA',
                     floating: true,
-                    offsetY: 330,
+                    offsetY: -5,
                     align: 'center',
                     style: {
                         color: '#444'
@@ -128,8 +128,9 @@ export default class Histo extends React.Component {
                 <div className="sub-header">
                     {/* <Link className="App-link" to="/home">Go Home</Link> */}
                     <div className="Alert">NOTE: this is dummy for a proof of concept</div>
-                    <div>{this.state.node}</div>
+                    
                 </div>
+                <div className="title" >{this.state.node}</div>
                 <DropdownButton className="DropdownButton" title="DROP" >
                     {nodeList.map(node =>
                         <li key = {node.toString()}>
@@ -145,7 +146,7 @@ export default class Histo extends React.Component {
                             options={this.createGraphState().options}
                             series={this.createGraphState().series}
                             type="bar"
-                            height={350}
+                            height={400}
                         />
                     </div>
                 </div>

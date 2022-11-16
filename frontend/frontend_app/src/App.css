@@ -38,7 +38,7 @@
 
 .sub-header {
   background-color: #20303b;
-  min-height: 20vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,6 +74,18 @@
   padding: 4px;
 }
 
+.title{
+  color: #20303b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color:#d4dbdf;
+  font-weight: bold;
+  border-radius: 2px;
+  padding: 4px;
+}
+
 .dropdown-menu {
   height: 300px;
   overflow-y: scroll;
@@ -82,6 +94,47 @@
 .DropdownItem {
   color: #000000;
   display: inline-block;
+}
+
+.contain{
+  background-color: #20303b;
+  clear: none;
+  color: #20303b;
+  height: 100vh;
+}
+
+.center{
+  position: relative;
+  margin: auto;
+  float: none;
+  width: 75vh;
+  height: 400;
+  clear: none;
+  bottom: 10px;
+  background-color: white;
+  border: 4px solid #4a5e67;
+}
+
+.right {
+  position: relative;
+  float: right;
+  width: 49vw;
+  height: 65vh;
+  right: 2px;
+  clear: none;
+  background-color: white;
+  border: 4px solid #4a5e67;
+}
+
+.left {
+  position: relative;
+  float: left;
+  width: 49vw;
+  clear: none;
+  height: 65vh;
+  left: 2px;
+  background-color: white;
+  border: 4px solid #4a5e67;
 }
 
 .Grapher {

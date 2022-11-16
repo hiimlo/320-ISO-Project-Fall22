@@ -19,7 +19,7 @@ import Histo from './Histogram';
 //console.log(data);
 //const nodeList = data.map(x => x.pnode_name);
 
-const scenario = 3;
+const scenario = 2;
 const url = 'http://localhost:3000/scenarios/'+scenario+'/nodes';
 
 async function fetchJson(url) {
@@ -43,7 +43,7 @@ export default class Graph extends React.Component {
         error: null,
         isLoaded: false,
         chartData: [],
-        node: '.I.KENT    345 2',
+        node: 'UN.ALTA    345 UALT',
         nodeList: [],
     };
     this.changeNode = this.changeNode.bind(this);
@@ -118,11 +118,14 @@ componentDidMount() {
       )
     } else {
     return (
-      <div>
+      <div className = "contain">
         <div className="sub-header">
           <Link className="App-link" to="/home">Go Home</Link>
-          <div>{this.state.node}</div>
+          
         </div>
+        
+        <div className = "center">
+        <div className = "title">{this.state.node}</div>
         <DropdownButton className="DropdownButton" title="DROP" >
           {this.state.nodeList.map(node =>
           <li key = {node.toString()}>
@@ -132,8 +135,7 @@ componentDidMount() {
           </li>
           )}
         </DropdownButton>
-        <div>
-          <Scatter className="Grapher"
+         <Scatter className="Grapher"
             data={this.createGraphState()}
             options={{
               title: {
@@ -159,9 +161,12 @@ componentDidMount() {
                   beginAtZero: false,
                 }
               }
-            }} />
-            <Heat />
-            <Histo />
+           }}/>
+           </div>
+           <div className = "contain">
+            <div className = "right"><Heat /></div>
+            <div className = "left"> <Histo /></div>
+           
         </div>
       </div>
     );

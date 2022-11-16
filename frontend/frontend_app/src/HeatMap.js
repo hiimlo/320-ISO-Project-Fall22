@@ -48,7 +48,7 @@ export default class Heat extends React.Component {
             series: ser,
             options: {
                 chart: {
-                    height: 350,
+                    height: 100,
                     type: 'heatmap',
                 },
                 plotOptions: {
@@ -108,8 +108,9 @@ export default class Heat extends React.Component {
                 <div className="sub-header">
                     {/* <Link className="App-link" to="/home">Go Home</Link> */}
                     <div className="Alert">NOTE: this is dummy for a proof of concept</div>
-                    <div>{this.state.node}</div>
+                    
                 </div>
+                <div className="title" >{this.state.node}</div>
                 <DropdownButton className="DropdownButton" title="DROP" >
                     {nodeList.map(node =>
                     <li key = {node.toString()}>
@@ -152,7 +153,7 @@ export default class Heat extends React.Component {
                             options={this.createGraphState().options}
                             series={this.createGraphState().series}
                             type="heatmap"
-                            height={450}
+                            height={400}
                         />
                     </div>
                 </div>
