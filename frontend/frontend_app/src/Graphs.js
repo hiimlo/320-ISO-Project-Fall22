@@ -2,13 +2,13 @@ import React from 'react';
 import { useState } from 'react'
 import './App.css';
 import { Scatter } from 'react-chartjs-2';
-import { CategoryScale } from 'chart.js';
+
 
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Chart from "react-apexcharts";
+
 import Heat from './HeatMap';
 import Histo from './Histogram';
 
@@ -94,6 +94,7 @@ componentDidMount() {
     })
 
     const graphState = {
+      
       labels: node,
       datasets: [
         {
@@ -125,7 +126,9 @@ componentDidMount() {
         </div>
         
         <div className = "center">
-        <div className = "title">{this.state.node}</div>
+        <div className = "title"><div className="title">LMP of Nodes </div>
+                                 <div>{this.state.node}</div>
+        </div>
         <DropdownButton className="DropdownButton" title="DROP" >
           {this.state.nodeList.map(node =>
           <li key = {node.toString()}>
@@ -138,10 +141,15 @@ componentDidMount() {
          <Scatter className="Grapher"
             data={this.createGraphState()}
             options={{
-              title: {
+              Title: {
                 display: true,
                 text: 'LMP Of Nodes',
-                fontSize: 20
+                fontSize: 20,
+                padding: {
+                  top: 10,
+                  bottom: 30
+              }
+                 
               },
               legend: {
                 display: true,

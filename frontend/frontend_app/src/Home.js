@@ -14,7 +14,7 @@ function Home() {
         <img src={isologo} className="iso-App-logo" alt="logo" />
 
         
-        <p>
+        <p className="title">
           Hello Team. Here's the landing page for our project.
         </p>
         <br></br>
