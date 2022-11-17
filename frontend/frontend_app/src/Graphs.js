@@ -19,7 +19,7 @@ import Histo from './Histogram';
 //console.log(data);
 //const nodeList = data.map(x => x.pnode_name);
 
-const scenario = 2;
+const scenario = 3;
 const url = 'http://localhost:3000/scenarios/'+scenario+'/nodes';
 
 async function fetchJson(url) {

@@ -9,6 +9,7 @@
     "apexcharts": "^3.36.1",
     "bootstrap": "^5.2.2",
     "chart.js": "^3.9.1",
+    "concurrently": "^7.5.0",
     "cors": "^2.8.5",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -20,7 +21,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node ../../backend/LMP^2/app.js & react-scripts start && fg",
+    "start": "concurrently --names 'backend,frontend' --prefix-colors 'yellow,blue' --kill-others \"node ../../backend/LMP2/app.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
