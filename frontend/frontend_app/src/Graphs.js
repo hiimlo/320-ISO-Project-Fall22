@@ -19,9 +19,10 @@ import Histo from './Histogram';
 //console.log(data);
 //const nodeList = data.map(x => x.pnode_name);
 
-const scenario = 3;
+let scenario = 2;
+let scenarioOther = 3;
 const url = 'http://localhost:3000/scenarios/'+scenario+'/nodes';
-
+const url2 = 'http://localhost:3000/scenarios/'+scenarioOther+'/nodes';
 async function fetchJson(url) {
   const response = await fetch(url)
   .then(response => response.json())
@@ -43,6 +44,7 @@ export default class Graph extends React.Component {
         error: null,
         isLoaded: false,
         chartData: [],
+        otherChartData: [],
         node: 'UN.ALTA    345 UALT',
         nodeList: [],
     };
@@ -55,8 +57,25 @@ getChartData = () => {
             (result) => {
                 //console.log(result);
                 this.setState({
-                    isLoaded: true,
                     chartData: result,
+                    nodeList: Object.keys(result)
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error,
+                });
+            }
+        );
+
+    fetchJson(url2)
+        .then(
+            (result) => {
+                //console.log(result);
+                this.setState({
+                    isLoaded: true,
+                    otherChartData: result,
                     nodeList: Object.keys(result)
                 });
             },
@@ -83,10 +102,13 @@ componentDidMount() {
   createGraphState() {
     const nodeName = this.state.node;
     let node = this.state.chartData[nodeName];
-    //console.log(node);
+    let otherNode = this.state.otherChartData[nodeName];
+    //console.log(otherNode);
+
+    let cur = 0;
     let dataPoint = node.map(function (e) {
       return {
-        x: ((e.PERIOD_ID.charCodeAt(11)-48)*10)+e.PERIOD_ID.charCodeAt(12)-48,
+        x: otherNode[cur++].LMP,
         y: e.LMP
       }
       
@@ -126,8 +148,12 @@ componentDidMount() {
         </div>
         
         <div className = "center">
-        <div className = "title"><div className="title">LMP of Nodes </div>
-                                 <div>{this.state.node}</div>
+        <div className = "title">
+          <div className="title">
+            <div>LMP of Nodes </div>
+            <div>(x axis = LMP of Scenario {scenarioOther}, y axis = LMP of Scenario {scenario})</div>
+          </div>
+          <div>{this.state.node}</div>
         </div>
         <DropdownButton className="DropdownButton" title="DROP" >
           {this.state.nodeList.map(node =>
@@ -160,7 +186,7 @@ componentDidMount() {
                   ticks: {
                     // Include a dollar sign in the ticks
                     callback: function (value, index, ticks) {
-                      return 'Day ' + value;
+                      return value;
                     }
                   },
                   position: 'bottom'
