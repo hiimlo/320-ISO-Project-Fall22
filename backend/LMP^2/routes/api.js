@@ -75,7 +75,6 @@ let search = async (req, res, next) => {
         nodes[nodeGroup] = _.groupBy(nodes[nodeGroup], function (node) {
             //Deconstructs stuff for comparison
             const [year, mon, day, hour] = node.PERIOD_ID.toISOString().split(/[-T:]/);
-            console.log(hour);
             const quarter = Math.floor((2 + parseInt(mon)) / 3);
             switch (sort) {
                 case "ALL":
