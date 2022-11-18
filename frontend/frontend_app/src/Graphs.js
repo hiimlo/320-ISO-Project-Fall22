@@ -114,7 +114,7 @@ componentDidMount() {
     } else if (!this.state.isLoaded){
       return (
         <div className = "App-header" >
-        <div className = "Alert"> LOADINGGG </div>
+        <div className = "Alert">  LOADING... </div>
         </div>
       )
     } else {
