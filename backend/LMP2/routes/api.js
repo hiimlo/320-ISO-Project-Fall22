@@ -6,6 +6,26 @@ const Scenario = require('../models/dummyScenarios');
 const Data = require('../models/dummyNodes');
 const Group = require('../models/dummyGroups');
 
+// general endpoint
+router.get('/node', async (req, res, next) => {
+    const nname = req.query.nname
+    const scenario = req.query.scenario
+    const start = req.query.start ?? '0000'
+    const end = req.query.end ?? '2100'
+
+    const filter = [{}]
+    if (nname != null) { filter.push({PNODE_NAME: nname}) }
+    if (scenario != null) { filter.push({SCENARIO_ID: scenario}) }
+    filter.push({PERIOD_ID: {
+        $gte: start, 
+        $lte: end
+    }})
+    //default all nodees, all scenarios, all times
+
+    const data = await Data.find({$and: filter});
+    res.send(data);
+});
+
 // Gets all scenarios. BF - 3
 router.get('/scenarios', async (req, res, next) => {
     const scenarios = await Scenario.find({});
