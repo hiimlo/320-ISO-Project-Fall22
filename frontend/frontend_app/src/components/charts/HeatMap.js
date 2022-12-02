@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-import './App.css';
+import '../../App.css';
 
 
 
@@ -13,7 +13,7 @@ import Chart from "react-apexcharts";
 //Chart.register(CategoryScale);
 
 
-const data = require('./localhost.json');
+const data = require('../../localhost.json');
 const nodeList = data.map(x => x.pnode_name);
 
 // Alex first push
@@ -48,7 +48,7 @@ export default class Heat extends React.Component {
             series: ser,
             options: {
                 chart: {
-                    height: 350,
+                    height: 100,
                     type: 'heatmap',
                 },
                 plotOptions: {
@@ -105,16 +105,19 @@ export default class Heat extends React.Component {
     render() {
         return (
             <div>
-                <div className="App-header">
+                <div className="sub-header">
                     {/* <Link className="App-link" to="/home">Go Home</Link> */}
                     <div className="Alert">NOTE: this is dummy for a proof of concept</div>
-                    <div>{this.state.node}</div>
+                    
                 </div>
+                <div className="title" >{this.state.node}</div>
                 <DropdownButton className="DropdownButton" title="DROP" >
                     {nodeList.map(node =>
+                    <li key = {node.toString()}>
                         <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
                             {node}
                         </Dropdown.Item>
+                    </li>
                     )}
                 </DropdownButton>
                 <div>
@@ -150,7 +153,7 @@ export default class Heat extends React.Component {
                             options={this.createGraphState().options}
                             series={this.createGraphState().series}
                             type="heatmap"
-                            height={450}
+                            height={400}
                         />
                     </div>
                 </div>

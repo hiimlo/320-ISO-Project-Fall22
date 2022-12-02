@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-import './App.css';
+import '../../App.css';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ApexCharts from 'apexcharts';
 import Chart from "react-apexcharts";
 
-const data = require('./localhost.json');
+const data = require('../../localhost.json');
 const nodeList = data.map(x => x.pnode_name);
 
 export default class Histo extends React.Component {
@@ -112,7 +112,7 @@ export default class Histo extends React.Component {
                 title: {
                     text: 'Histogram of DUMMY DATA',
                     floating: true,
-                    offsetY: 330,
+                    offsetY: -5,
                     align: 'center',
                     style: {
                         color: '#444'
@@ -125,16 +125,19 @@ export default class Histo extends React.Component {
     render() {
         return (
             <div>
-                <div className="App-header">
+                <div className="sub-header">
                     {/* <Link className="App-link" to="/home">Go Home</Link> */}
                     <div className="Alert">NOTE: this is dummy for a proof of concept</div>
-                    <div>{this.state.node}</div>
+                    
                 </div>
+                <div className="title" >{this.state.node}</div>
                 <DropdownButton className="DropdownButton" title="DROP" >
                     {nodeList.map(node =>
-                        <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
-                            {node}
-                        </Dropdown.Item>
+                        <li key = {node.toString()}>
+                            <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
+                                {node}
+                            </Dropdown.Item>
+                         </li>
                     )}
                 </DropdownButton>
                 <div>
@@ -143,7 +146,7 @@ export default class Histo extends React.Component {
                             options={this.createGraphState().options}
                             series={this.createGraphState().series}
                             type="bar"
-                            height={350}
+                            height={400}
                         />
                     </div>
                 </div>

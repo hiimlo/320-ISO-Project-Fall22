@@ -5,9 +5,10 @@ import { BrowserRouter as Router,
    Routes,
    Navigate,} from "react-router-dom";
 
-import Home from "./Home"
-import Graph from "./Graphs"
-import Stats from "./Stats"
+import Home from "./components/Home"
+import Graph from "./components/Graphs"
+import ShowData from "./components/ShowData";
+import Stats from "./components/Stats"
 
 function App() {
   return (

@@ -1,12 +1,12 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import { Scatter } from 'react-chartjs-2';
 import { CategoryScale } from 'chart.js';
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart } from 'react-chartjs-2'
 import { Link } from "react-router-dom";
 //Chart.register(CategoryScale);
-import cone from './images/trafficCone';
+import cone from '../images/trafficCone'
 
 
 function Stats() {

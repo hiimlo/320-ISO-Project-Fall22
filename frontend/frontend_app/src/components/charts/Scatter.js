@@ -13,7 +13,7 @@ import Chart from "react-apexcharts";
 //Chart.register(CategoryScale);
 
 
-const data = require('./localhost.json');
+const data = require('../../localhost.json');
 const nodeList = data.map(x => x.pnode_name);
 
 // Alex first push
