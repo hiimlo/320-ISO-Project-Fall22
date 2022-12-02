@@ -23,7 +23,11 @@ router.get('/node', async (req, res, next) => {
     //default all nodees, all scenarios, all times
 
     const data = await Data.find({$and: filter});
-    res.send(data);
+    if (data.length === 0) {
+        res.status(404).send("No data found for the given parameters");
+    } else {
+        res.send(data);
+    }
 });
 
 // Gets all scenarios. BF - 3
