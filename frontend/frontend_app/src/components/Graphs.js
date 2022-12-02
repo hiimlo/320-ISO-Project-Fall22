@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Heat from './charts/HeatMap';
 import Histo from './charts/Histogram';
 import Area from './charts/AreaChart'
+import ApiWrapper from '../util/ApiWrapper'
 //Chart.register(CategoryScale);
 
 
@@ -21,8 +22,8 @@ import Area from './charts/AreaChart'
 
 let scenario = 2;
 let scenarioOther = 3;
-const url = 'http://localhost:3000/scenarios/' + scenario + '/nodes';
-const url2 = 'http://localhost:3000/scenarios/' + scenarioOther + '/nodes';
+const url = 'http://localhost:3000/scenarios/' + scenario + '/nodes' + '/PNODE_NAME' + '?id=' + encodeURIComponent('UN.ALTA    345 UALT');
+const url2 = 'http://localhost:3000/scenarios/' + scenarioOther + '/nodes' + '/PNODE_NAME' + '?id=' + encodeURIComponent('UN.ALTA    345 UALT');
 async function fetchJson(url) {
   const response = await fetch(url)
     .then(response => response.json())
@@ -31,8 +32,8 @@ async function fetchJson(url) {
       console.log("LMPERR" + err.message);
     });
 
-  //console.log(response);
-  return await response;
+  //console.log(response['NODES']);
+  return await response['NODES'];
 }
 
 // Alex first push
@@ -52,13 +53,14 @@ export default class Graph extends React.Component {
   }
 
   getChartData = () => {
-    fetchJson(url)
+    ApiWrapper.getDatafromApiAsync(this.state.node, scenario)
       .then(
-        (result) => {
-          //console.log(result);
+        (response) => {
+          console.log('r1: ');
+          console.log(response)
           this.setState({
-            chartData: result,
-            nodeList: Object.keys(result)
+            chartData: response.map((n) => n.LMP),
+            //nodeList: Object.keys(response)
           });
         },
         (error) => {
@@ -69,14 +71,15 @@ export default class Graph extends React.Component {
         }
       );
 
-    fetchJson(url2)
+      ApiWrapper.getDatafromApiAsync(this.state.node, scenarioOther)
       .then(
-        (result) => {
-          //console.log(result);
+        (response) => {
+          console.log('r2: ');
+          console.log(response)
           this.setState({
             isLoaded: true,
-            otherChartData: result,
-            nodeList: Object.keys(result)
+            otherChartData: response.map((n) => n.LMP),
+            //nodeList: Object.keys(response)
           });
         },
         (error) => {
@@ -90,6 +93,7 @@ export default class Graph extends React.Component {
 
   componentDidMount() {
     this.getChartData();
+    console.log(this.state)
   }
 
 
@@ -100,24 +104,31 @@ export default class Graph extends React.Component {
   }
 
   createGraphState() {
+    //console.log(this.state)
     const nodeName = this.state.node;
-    let node = this.state.chartData[nodeName];
-    let otherNode = this.state.otherChartData[nodeName];
-    //console.log(otherNode);
+    // let nodeList = this.state.nodeList;
+    // console.log(nodeName, nodeList)
+    // //console.log(otherNode);
 
-    let cur = 0;
-    let dataPoint = node.map(function (e) {
-      return {
-        x: otherNode[cur++].LMP,
-        y: e.LMP
-      }
+    // let cur = 0;
+    // let dataPoint = nodeList.map(function (e) {
+    //   return {
+    //     x: this.state.chartData[e].LMP,
+    //     y: this.state.otherChartData[e].LMP
+    //   }
 
 
-    })
+    // })
+    let dataPoint = {
+      x: this.state.chartData,
+      y: this.state.otherChartData
+    }
+    console.log(dataPoint.x)
+    console.log(dataPoint.y)
 
     const graphState = {
 
-      labels: node,
+      labels: nodeName,
       datasets: [
         {
           label: 'LMP By Hour',
