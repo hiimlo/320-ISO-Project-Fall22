@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-import './App.css';
+import '../../App.css';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ApexCharts from 'apexcharts';
 import Chart from "react-apexcharts";
 
-const data = require('./localhost.json');
+const data = require('../../localhost.json');
 const nodeList = data.map(x => x.pnode_name);
 
 export default class Histo extends React.Component {

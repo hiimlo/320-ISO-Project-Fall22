@@ -1,6 +1,6 @@
-import isologo from './images/ISO Logo clear.png';
+import isologo from '../images/ISO Logo clear.png';
 //import logo from './images/logo.svg';
-import './App.css';
+import '../App.css';
 import { Link } from "react-router-dom";
 
 

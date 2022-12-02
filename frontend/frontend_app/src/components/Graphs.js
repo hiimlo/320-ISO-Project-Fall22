@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-import './App.css';
+import '../App.css';
 import { Scatter } from 'react-chartjs-2';
 
 
@@ -9,9 +9,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Heat from './HeatMap';
-import Histo from './Histogram';
-import Area from './AreaChart'
+import Heat from './charts/HeatMap';
+import Histo from './charts/Histogram';
+import Area from './charts/AreaChart'
 //Chart.register(CategoryScale);
 
 
