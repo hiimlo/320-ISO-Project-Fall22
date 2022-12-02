@@ -53,7 +53,7 @@ export default class Graph extends React.Component {
   }
 
   getChartData = () => {
-    ApiWrapper.getDatafromApiAsync(this.state.node, scenario)
+    ApiWrapper.getDatafromApiAsync(this.state.node, scenario, '2020', '2021')
       .then(
         (response) => {
           console.log('r1: ');
@@ -71,7 +71,7 @@ export default class Graph extends React.Component {
         }
       );
 
-      ApiWrapper.getDatafromApiAsync(this.state.node, scenarioOther)
+      ApiWrapper.getDatafromApiAsync(this.state.node, scenarioOther, '2020', '2021')
       .then(
         (response) => {
           console.log('r2: ');
@@ -164,7 +164,7 @@ export default class Graph extends React.Component {
             <div className="title">
               <div className="title">
                 <div>LMP of Nodes </div>
-                <div>(x axis = LMP of Scenario {scenarioOther}, y axis = LMP of Scenario {scenario})</div>
+                {/*<div>(x axis = LMP of Scenario {scenarioOther}, y axis = LMP of Scenario {scenario})</div>*/}
               </div>
               <div>{this.state.node}</div>
             </div>
@@ -202,11 +202,19 @@ export default class Graph extends React.Component {
                         return value;
                       }
                     },
-                    position: 'bottom'
+                    position: 'bottom',
+                    title: {
+                      display: true,
+                      text: 'Scenario 2 LMP'
+                    }
                   },
                   y: {
                     beginAtZero: false,
-                  }
+                    title: {
+                      display: true,
+                      text: 'Scenario 3 LMP'
+                    }
+                  },
                 }
               }} />
           </div>
