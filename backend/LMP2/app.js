@@ -48,5 +48,5 @@ app.get('/', cors(corsOptions), function(req, res, next) {
 app.use('/', apiRoutes);
 
 app.listen(3000, () => {
-    console.log("Serving on port 3000")
+    console.log("Serving API endpoint on port 3000")
 });
