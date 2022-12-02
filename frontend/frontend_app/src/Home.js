@@ -9,7 +9,7 @@ function Home() {
   return (
     
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         
         <img src={isologo} className="iso-App-logo" alt="logo" />
 
@@ -22,7 +22,7 @@ function Home() {
         <Link className="App-link" to="/graph">Graph</Link>
         <Link className="App-link" to="/stats">Stats</Link>
         </div>
-      </header> 
+      </div> 
     </div>
 
    
