@@ -119,12 +119,14 @@ export default class Graph extends React.Component {
 
 
     // })
-    let dataPoint = {
-      x: this.state.chartData,
-      y: this.state.otherChartData
-    }
-    console.log(dataPoint.x)
-    console.log(dataPoint.y)
+    let dataPoint = this.state.chartData.map((e, i) => {
+      return {
+        x: e,
+        y: this.state.otherChartData[i]
+      }
+    })
+    // console.log(dataPoint.x)
+    // console.log(dataPoint.y)
 
     const graphState = {
 
