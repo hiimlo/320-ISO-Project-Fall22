@@ -22,19 +22,6 @@ import ApiWrapper from '../util/ApiWrapper'
 
 let scenario = 2;
 let scenarioOther = 3;
-const url = 'http://localhost:3000/scenarios/' + scenario + '/nodes' + '/PNODE_NAME' + '?id=' + encodeURIComponent('UN.ALTA    345 UALT');
-const url2 = 'http://localhost:3000/scenarios/' + scenarioOther + '/nodes' + '/PNODE_NAME' + '?id=' + encodeURIComponent('UN.ALTA    345 UALT');
-async function fetchJson(url) {
-  const response = await fetch(url)
-    .then(response => response.json())
-    .then(nodes => nodes)
-    .catch((err) => {
-      console.log("LMPERR" + err.message);
-    });
-
-  //console.log(response['NODES']);
-  return await response['NODES'];
-}
 
 // Alex first push
 export default class Graph extends React.Component {
@@ -56,8 +43,6 @@ export default class Graph extends React.Component {
     ApiWrapper.getDatafromApiAsync(this.state.node, scenario, '2020', '2021')
       .then(
         (response) => {
-          console.log('r1: ');
-          console.log(response)
           this.setState({
             chartData: response.map((n) => n.LMP),
             //nodeList: Object.keys(response)
@@ -74,8 +59,6 @@ export default class Graph extends React.Component {
       ApiWrapper.getDatafromApiAsync(this.state.node, scenarioOther, '2020', '2021')
       .then(
         (response) => {
-          console.log('r2: ');
-          console.log(response)
           this.setState({
             isLoaded: true,
             otherChartData: response.map((n) => n.LMP),
@@ -93,7 +76,6 @@ export default class Graph extends React.Component {
 
   componentDidMount() {
     this.getChartData();
-    console.log(this.state)
   }
 
 
@@ -104,29 +86,13 @@ export default class Graph extends React.Component {
   }
 
   createGraphState() {
-    //console.log(this.state)
     const nodeName = this.state.node;
-    // let nodeList = this.state.nodeList;
-    // console.log(nodeName, nodeList)
-    // //console.log(otherNode);
-
-    // let cur = 0;
-    // let dataPoint = nodeList.map(function (e) {
-    //   return {
-    //     x: this.state.chartData[e].LMP,
-    //     y: this.state.otherChartData[e].LMP
-    //   }
-
-
-    // })
     let dataPoint = this.state.chartData.map((e, i) => {
       return {
         x: e,
         y: this.state.otherChartData[i]
       }
     })
-    // console.log(dataPoint.x)
-    // console.log(dataPoint.y)
 
     const graphState = {
 
