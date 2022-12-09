@@ -1,118 +1,119 @@
 import React from 'react';
 import '../App.css';
-import { Scatter } from 'react-chartjs-2';
-import { CategoryScale } from 'chart.js';
-import { Chart as ChartJS } from 'chart.js/auto'
-import { Chart } from 'react-chartjs-2'
 import { Link } from "react-router-dom";
-//Chart.register(CategoryScale);
-import cone from '../images/trafficCone'
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function Stats() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      <Link className="App-link" to="/home">Go Home</Link>
-        <div className="Alert">THIS PAGE IS A WORK IN PROGRESS</div>
-        <img src={cone} className="App-logo" alt="logo" />
-      
-      </header> 
-    </div>
-
-   
-  );
-}
-
-export default Stats;
-
-
-/*
-const data = require('./localhost.json');
-
-export default class Graph extends React.Component {
+export default class Stats extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {node: '.I.KENT    345 2'};
-    this.changeNode = this.changeNode.bind(this);
-  }
-
-  changeNode(event, name) {
-    this.setState({
-      node: name
-    })
-  }
-
-  createGraphState() {
-    const nodeName = this.state.node;
-    let node = data.filter(function (e) {
-      if (nodeName === e.pnode_name) {
-        return e;
-      }
-    })
-    
-    let dataPoint = node.map(function (e) {
-      return {
-        x: e.period_id.charCodeAt(e.period_id.length - 1) - 48,
-        y: e.lmp
-      }
-    })
-
-    const graphState = {
-      labels: node,
-      datasets: [
-        {
-          label: 'Nodes',
-          backgroundColor: 'rgba(75,192,192,1)',
-          borderColor: 'rgba(0,0,0,1)',
-          borderWidth: 2,
-          data: dataPoint,
-        }
-      ]
+    this.state = {
+      nodes: ["node1", "node2", "node3", "node4"],
+      dates: ["day1", "day2", "day3", "day4"]
     }
-    return graphState;
   }
 
   render() {
     return (
-      <div className="App-header">
-        <Link className="App-link" to="/home">Go Home</Link>
-        <div className="Alert">NOTE: this is dummy for a proof of concept</div>
-        <button onClick = {event => this.changeNode(event, '.I.KENT    345 2')}>.I.KENT    345 2</button>
-        <button onClick = {event => this.changeNode(event, '.I.PARKCITY345 1')}>.I.PARKCITY345 1</button>
-        <button onClick = {event => this.changeNode(event, '.I.VICTORIA345 1')}>.I.VICTORIA345 1</button>
-        <div>{this.state.node}</div>
-        <Scatter className="Grapher"
-          data={this.createGraphState()}
-          options={{
-            title: {
-              display: true,
-              text: 'LMP Of Nodes',
-              fontSize: 20
-            },
-            legend: {
-              display: true,
-              position: 'right'
-            },
-            scales: {
-              x: {
-                ticks: {
-                  // Include a dollar sign in the ticks
-                  callback: function (value, index, ticks) {
-                    return 'Day ' + value;
-                  }
-                },
-                position: 'bottom'
-              },
-              y: {
-                beginAtZero: true,
-              }
-            }
-          }} />
+      <div className="App">
+        <div className="sub-header">
+          <Link className="App-link" to="/home">Go Home</Link>    
+        </div> 
+        <div className = "rowC">
+          <DropdownButton className="DropdownButton" title="Node" >
+            {this.state.nodes.map(node =>
+              <li key = {node.toString()}>
+                <Dropdown.Item className="DropdownItem" as="button">
+                  {node}
+                </Dropdown.Item>
+              </li>
+            )}
+          </DropdownButton>
+          <DropdownButton className="DropdownButton" title="Date" >
+            {this.state.dates.map(node =>
+              <li key = {node.toString()}>
+                <Dropdown.Item className="DropdownItem" as="button">
+                  {node}
+                </Dropdown.Item>
+              </li>
+            )}
+          </DropdownButton>
+        </div>
+        <div className='centered'>
+          <table>
+            <tr>
+              <th>Statistic</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td>STDEV</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>MEAN</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>MODE</td>
+              <td>1</td>
+            </tr>
+          </table>
+        </div>
       </div>
-
-    );
+    )
   }
 }
-*/
-//Graph.register(CategoryScale);
+// function Stats () {
+//     const nodes = ["node1", "node2", "node3", "node4"]
+//     const dates = ["day1", "day2", "day3", "day4"]
+//     return (
+//       <div className="App">
+//         <div className="sub-header">
+//           <Link className="App-link" to="/home">Go Home</Link>    
+//         </div> 
+//         <div className = "rowC">
+//           <DropdownButton className="DropdownButton" title="Node" >
+//             {nodes.map(node =>
+//               <li key = {node.toString()}>
+//                 <Dropdown.Item className="DropdownItem" as="button">
+//                   {node}
+//                 </Dropdown.Item>
+//               </li>
+//             )}
+//           </DropdownButton>
+//           <DropdownButton className="DropdownButton" title="Date" >
+//             {dates.map(node =>
+//               <li key = {node.toString()}>
+//                 <Dropdown.Item className="DropdownItem" as="button">
+//                   {node}
+//                 </Dropdown.Item>
+//               </li>
+//             )}
+//           </DropdownButton>
+//         </div>
+//         <div className='centered'>
+//           <table>
+//             <tr>
+//               <th>Statistic</th>
+//               <th>Value</th>
+//             </tr>
+//             <tr>
+//               <td>STDEV</td>
+//               <td>1</td>
+//             </tr>
+//             <tr>
+//               <td>MEAN</td>
+//               <td>1</td>
+//             </tr>
+//             <tr>
+//               <td>MODE</td>
+//               <td>1</td>
+//             </tr>
+//           </table>
+//         </div>
+//       </div>
+//     );
+//   }
+

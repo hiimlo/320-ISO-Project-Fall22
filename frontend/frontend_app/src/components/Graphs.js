@@ -1,13 +1,14 @@
 import React from 'react';
 import { useState } from 'react'
 import '../App.css';
-import { Scatter } from 'react-chartjs-2';
+// import { Scatter } from 'react-chartjs-2';
 
-
+import Chart from "react-apexcharts";
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import Heat from './charts/HeatMap';
 import Histo from './charts/Histogram';
@@ -27,7 +28,7 @@ let scenarioOther = 3;
 export default class Graph extends React.Component {
 
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       error: null,
       isLoaded: false,
@@ -56,7 +57,7 @@ export default class Graph extends React.Component {
         }
       );
 
-      ApiWrapper.getDatafromApiAsync(this.state.node, scenarioOther, '2020', '2021')
+    ApiWrapper.getDatafromApiAsync(this.state.node, scenarioOther, '2020', '2021')
       .then(
         (response) => {
           this.setState({
@@ -87,25 +88,52 @@ export default class Graph extends React.Component {
 
   createGraphState() {
     const nodeName = this.state.node;
+    // let dataPoint = this.state.chartData.map((e, i) => {
+    //   return {
+    //     x: e,
+    //     y: this.state.otherChartData[i]
+    //   }
+    // })
     let dataPoint = this.state.chartData.map((e, i) => {
-      return {
-        x: e,
-        y: this.state.otherChartData[i]
-      }
+      return [e, this.state.otherChartData[i]]
     })
 
     const graphState = {
-
-      labels: nodeName,
-      datasets: [
-        {
-          label: 'LMP By Hour',
-          backgroundColor: 'rgba(75,192,192,1)',
-          borderColor: 'rgba(0,0,0,1)',
-          borderWidth: 2,
-          data: dataPoint,
+      series: [{
+        name: nodeName,
+        data: dataPoint
+      }],
+      options: {
+        chart: {
+          height: 350,
+          type: 'scatter',
+          zoom: {
+            enabled: true,
+            type: 'xy'
+          }
         }
-      ]
+      },
+      xaxis: {
+        tickAmount: 10,
+        labels: {
+          formatter: function (val) {
+            return parseFloat(val).toFixed(1)
+          }
+        }
+      },
+      yaxis: {
+        tickAmount: 7
+      }
+      //   labels: nodeName,
+      //   datasets: [
+      //     {
+      //       label: 'LMP By Hour',
+      //       backgroundColor: 'rgba(75,192,192,1)',
+      //       borderColor: 'rgba(0,0,0,1)',
+      //       borderWidth: 2,
+      //       data: dataPoint,
+      //     }
+      //   ]
     }
     return graphState;
   }
@@ -143,7 +171,7 @@ export default class Graph extends React.Component {
                 </li>
               )}
             </DropdownButton>
-            <Scatter className="Grapher"
+            {/* <Scatter className="Grapher"
               data={this.createGraphState()}
               options={{
                 Title: {
@@ -182,14 +210,22 @@ export default class Graph extends React.Component {
                     }
                   },
                 }
-              }} />
+              }} /> */}
+            <div id="chart">
+              <Chart
+                options={this.createGraphState().options}
+                series={this.createGraphState().series}
+                type="scatter"
+                height={400}
+              />
+            </div>
           </div>
           <div className="contain">
             <div className="right"><Heat /></div>
             <div className="left"> <Histo /></div>
-            
+
           </div>
-          <div><Area/></div>
+          <div><Area /></div>
         </div>
       );
     }
