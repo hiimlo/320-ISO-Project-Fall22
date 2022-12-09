@@ -14,7 +14,7 @@ import Heat from './charts/HeatMap';
 import Histo from './charts/Histogram';
 import Area from './charts/AreaChart'
 import ApiWrapper from '../util/ApiWrapper'
-//Chart.register(CategoryScale);
+
 
 
 //const data = require('./localhost.json');
@@ -24,7 +24,7 @@ import ApiWrapper from '../util/ApiWrapper'
 let scenario = 2;
 let scenarioOther = 3;
 
-// Alex first push
+
 export default class Graph extends React.Component {
 
   constructor(props) {

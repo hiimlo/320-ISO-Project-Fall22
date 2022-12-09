@@ -121,33 +121,6 @@ export default class Heat extends React.Component {
                     )}
                 </DropdownButton>
                 <div>
-                    {/* <Scatter className="Grapher"
-            data={this.createGraphState()}
-            options={{
-              title: {
-                display: true,
-                text: 'LMP Of Nodes',
-                fontSize: 20
-              },
-              legend: {
-                display: true,
-                position: 'right'
-              },
-              scales: {
-                x: {
-                  ticks: {
-                    // Include a dollar sign in the ticks
-                    callback: function (value, index, ticks) {
-                      return 'Day ' + value;
-                    }
-                  },
-                  position: 'bottom'
-                },
-                y: {
-                  beginAtZero: true,
-                }
-              }
-            }} /> */}
                     <div id="chart">
                         <Chart
                             options={this.createGraphState().options}
