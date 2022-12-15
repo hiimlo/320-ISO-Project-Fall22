@@ -8,7 +8,7 @@ export default class AreaChart extends Component {
             series: [
                 {
                     name: props.metric ?? 'Scenario 1', //scenario 1 and 2
-                    data: props.series_data
+                    data: props.data
                 }
             ]
         }

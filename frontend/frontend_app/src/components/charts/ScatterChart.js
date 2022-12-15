@@ -8,7 +8,7 @@ export default class ScatterChart extends Component {
             series: [
                 {
                     name: props.metric ?? 'LMP',
-                    data: props.series_data
+                    data: props.data
                 }
             ]
         }
