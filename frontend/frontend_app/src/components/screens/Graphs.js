@@ -36,12 +36,7 @@ export default class Graph extends React.Component {
     }
 
     getChartData = () => {
-        ApiWrapper.getDatafromApiAsync(
-            this.state.node,
-            scenario,
-            '2020',
-            '2021'
-        ).then(
+        ApiWrapper.getData(this.state.node, scenario, '2020', '2021').then(
             (response) => {
                 this.setState({
                     chartData: response.map((n) => n.LMP)
@@ -56,12 +51,7 @@ export default class Graph extends React.Component {
             }
         )
 
-        ApiWrapper.getDatafromApiAsync(
-            this.state.node,
-            scenarioOther,
-            '2020',
-            '2021'
-        ).then(
+        ApiWrapper.getData(this.state.node, scenarioOther, '2020', '2021').then(
             (response) => {
                 this.setState({
                     isLoaded: true,
