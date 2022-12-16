@@ -37,6 +37,12 @@ router.get('/node', async (req, res, next) => {
     }
 })
 
+//Get a list of all node names.
+router.get('/nodes', async (req, res, next) => {
+    const nodeNames = await Data.distinct('PNODE_NAME')
+    res.send(nodeNames);
+})
+
 // Gets all scenarios. BF - 3
 router.get('/scenarios', async (req, res, next) => {
     const scenarios = await Scenario.find({})
