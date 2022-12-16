@@ -5,32 +5,25 @@ export default class AreaChart extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            series: [
-                {
-                    name: props.metric ?? 'Scenario 1', //scenario 1 and 2
-                    data: props.data1
-                },
-                {
-                    name: props.metric ?? 'Scenario 2', //scenario 1 and 2
-                    data: props.data2
-                }
-            ]
+            series: this.makeSeries(props)
         }
     }
 
+    makeSeries(props) {
+        return [
+            {
+                name: props.metric ?? 'Scenario 1', //scenario 1 and 2
+                data: props.data1
+            },
+            {
+                name: props.metric ?? 'Scenario 2', //scenario 1 and 2
+                data: props.data2
+            }
+        ]
+    }
+
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            series: [
-                {
-                    name: nextProps.metric ?? 'Scenario 1', //scenario 1 and 2
-                    data: nextProps.data1
-                },
-                {
-                    name: nextProps.metric ?? 'Scenario 2', //scenario 1 and 2
-                    data: nextProps.data2
-                }
-            ]
-        })
+        this.setState({ series: this.makeSeries(nextProps) })
     }
 
     render() {

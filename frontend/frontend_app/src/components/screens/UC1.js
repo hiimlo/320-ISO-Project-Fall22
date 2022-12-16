@@ -31,7 +31,7 @@ export default class UC1 extends React.Component {
             scenario2: 1,
             scenarioList: [],
             startTime: '2020-01-01',
-            endTime: '2020-01-10',
+            endTime: '2020-01-04',
             data1: [],
             data2: []
             // api response should be expected to be arr_series1, arr_series2, and time range or something like that

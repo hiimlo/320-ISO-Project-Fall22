@@ -5,28 +5,23 @@ export default class ScatterChart extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            series: [
-                {
-                    name: props.metric ?? 'LMP',
-                    data: props.data1.map(function (e, i) {
-                        return [e, props.data2[i]]
-                    })
-                }
-            ]
+            series: this.makeSeries(props)
         }
     }
 
+    makeSeries(props) {
+        return [
+            {
+                name: props.metric ?? 'LMP',
+                data: props.data1.map(function (e, i) {
+                    return [e, props.data2[i]]
+                })
+            }
+        ]
+    }
+
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            series: [
-                {
-                    name: nextProps.metric ?? 'LMP',
-                    data: nextProps.data1.map(function (e, i) {
-                        return [e, nextProps.data2[i]]
-                    })
-                }
-            ]
-        })
+        this.setState({ series: this.makeSeries(nextProps) })
     }
 
     render() {
