@@ -17,10 +17,6 @@ import AreaChart from '../charts/AreaChart'
 import ApiWrapper from '../../util/ApiWrapper'
 import ScatterChart from '../charts/ScatterChart'
 
-//const data = require('./localhost.json');
-//console.log(data);
-//const nodeList = data.map(x => x.pnode_name);
-
 export default class UC1 extends React.Component {
     constructor() {
         //super(props);
@@ -28,92 +24,131 @@ export default class UC1 extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            metric: null,
-            scenario1: 1,
-            scenario2: -1,
+            metric: '',
             node: 'UN.ALTA    345 UALT',
-            data: [
-                [16.4, 5.4],
-                [21.7, 2],
-                [25.4, 3]
-            ],
-            scenarioList: []
+            nodeList: [],
+            scenario1: 1,
+            scenario2: 1,
+            scenarioList: [],
+            startTime: '2020-01-01',
+            endTime: '2020-01-02',
+            data1: [],
+            data2: []
             // api response should be expected to be arr_series1, arr_series2, and time range or something like that
         }
+
+        //bindings (so that state is not undefined in first render())
+        this.changeBaseCase = this.changeBaseCase.bind(this)
+        this.changeOtherScenario = this.changeOtherScenario.bind(this)
         //this.changeNode = this.changeNode.bind(this);
     }
 
-    transformData() {
-        //transform for each kind of chart
-        return
+    updateData1() {
+        ApiWrapper.getData(
+            //updates data1
+            this.state.node,
+            this.state.scenario1,
+            this.state.startTime,
+            this.state.endTime
+        ).then(
+            (response) => {
+                this.setState({
+                    isLoaded: true,
+                    data1: response.map((n) => n.LMP)
+                })
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error: true
+                })
+            }
+        )
+    }
+    updateData2() {
+        ApiWrapper.getData(
+            //updates data2
+            this.state.node,
+            this.state.scenario2,
+            this.state.startTime,
+            this.state.endTime
+        ).then(
+            (response) => {
+                this.setState({
+                    isLoaded: true,
+                    data2: response.map((n) => n.LMP)
+                })
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error: true
+                })
+            }
+        )
     }
 
-    getChartData = () => {
+    getChartData() {
+        this.updateData1()
+        this.updateData2()
         return
     }
 
     componentDidMount() {
         console.log('UC1 post-mount...')
-
+        //console.log(this.state.scenario1, this.state.scenario2)
         //get list of scenarios for drop down
         ApiWrapper.getScenarios().then((response) => {
             this.setState({
-                scenarioList: response.SCENARIOS.map((s) => s)
+                scenarioList: response.SCENARIOS
             })
         })
-
-        //get node data
-        // if (this.state.scenario2 !== -1) {
-        //     ApiWrapper.getData(this.state.node, this.state.scenario2, '2020', '2021').then(
-        //         (response) => {
-        //             this.setState({
-        //                 isLoaded: true,
-        //                 otherChartData: response.map((n) => n.LMP)
-        //                 //nodeList: Object.keys(response)
-        //             })
-        //         },
-        //         (error) => {
-        //             this.setState({
-        //                 isLoaded: true,
-        //                 error
-        //             })
-        //         }
-        //     )
-        // }
+        this.getChartData()
         return
     }
 
-    changeNode(event, name) {
-        this.setState({
-            node: name
+    changeBaseCase(event) {
+        this.setState({ scenario1: event.target.value }, function () {
+            // callback
+            this.updateData1()
         })
-        return
     }
 
-    createGraphState() {}
-
-    handleChange = (event) => {
-        this.setState({
-            scenario2: event.target.value
+    changeOtherScenario(event) {
+        this.setState({ scenario2: event.target.value }, function () {
+            // callback
+            this.updateData2()
         })
     }
 
     // chart wise, we want scatter, histo, heatmap, and area
     render() {
         console.log('rendering UC1...')
-        //console.log(this.state.scenario2)
         return (
             <div>
                 <h1>hello world!</h1>
-                <h3>Scenario:</h3>
+                <h3>Base Case:</h3>
                 <select
-                    value={this.state.scenario2}
-                    onChange={this.handleChange}
+                    value={this.state.scenario1}
+                    onChange={this.changeBaseCase}
                 >
-                    <option value={null}>Please select scenario</option>
+                    {/* <option value={-1}>Please select scenario</option> */}
                     {this.state.scenarioList.map((s) => {
                         return (
-                            <option key={s.SCENARIO_ID} value={s.SCENARIO_ID}>
+                            <option key={s._id} value={s.SCENARIO_ID}>
+                                {s.SCENARIO_NAME}
+                            </option>
+                        )
+                    })}
+                </select>
+                <h3>Other Scenario:</h3>
+                <select
+                    value={this.state.scenario2}
+                    onChange={this.changeOtherScenario}
+                >
+                    {this.state.scenarioList.map((s) => {
+                        return (
+                            <option key={s._id} value={s.SCENARIO_ID}>
                                 {s.SCENARIO_NAME}
                             </option>
                         )
@@ -121,10 +156,15 @@ export default class UC1 extends React.Component {
                 </select>
 
                 <ScatterChart
-                    data={this.state.data}
+                    data1={this.state.data1}
+                    data2={this.state.data2}
                     metric={this.state.metric}
                 />
-                <AreaChart data={this.state.data} metric={this.state.metric} />
+                <AreaChart
+                    data1={this.state.data1}
+                    data2={this.state.data2}
+                    metric={this.state.metric}
+                />
             </div>
         )
     }

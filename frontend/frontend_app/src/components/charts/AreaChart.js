@@ -8,10 +8,29 @@ export default class AreaChart extends Component {
             series: [
                 {
                     name: props.metric ?? 'Scenario 1', //scenario 1 and 2
-                    data: props.data
+                    data: props.data1
+                },
+                {
+                    name: props.metric ?? 'Scenario 2', //scenario 1 and 2
+                    data: props.data2
                 }
             ]
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            series: [
+                {
+                    name: nextProps.metric ?? 'Scenario 1', //scenario 1 and 2
+                    data: nextProps.data1
+                },
+                {
+                    name: nextProps.metric ?? 'Scenario 2', //scenario 1 and 2
+                    data: nextProps.data2
+                }
+            ]
+        })
     }
 
     render() {
@@ -29,19 +48,19 @@ export default class AreaChart extends Component {
                         stroke: {
                             curve: 'smooth'
                         },
-                        xaxis: {
-                            type: 'datetime',
-                            //categories should be defined based on the state. use helper
-                            categories: [
-                                '2018-09-19T00:00:00.000Z',
-                                '2018-09-19T01:30:00.000Z',
-                                '2018-09-19T02:30:00.000Z',
-                                '2018-09-19T03:30:00.000Z',
-                                '2018-09-19T04:30:00.000Z',
-                                '2018-09-19T05:30:00.000Z',
-                                '2018-09-19T06:30:00.000Z'
-                            ]
-                        },
+                        // xaxis: {
+                        //     type: 'datetime',
+                        //     //categories should be defined based on the state. use helper
+                        //     categories: [
+                        //         '2018-09-19T00:00:00.000Z',
+                        //         '2018-09-19T01:30:00.000Z',
+                        //         '2018-09-19T02:30:00.000Z',
+                        //         '2018-09-19T03:30:00.000Z',
+                        //         '2018-09-19T04:30:00.000Z',
+                        //         '2018-09-19T05:30:00.000Z',
+                        //         '2018-09-19T06:30:00.000Z'
+                        //     ]
+                        // },
                         tooltip: {
                             x: {
                                 format: 'dd/MM/yy HH:mm'
