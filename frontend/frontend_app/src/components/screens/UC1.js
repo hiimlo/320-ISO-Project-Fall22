@@ -30,8 +30,8 @@ export default class UC1 extends React.Component {
             scenario1: 1,
             scenario2: 1,
             scenarioList: [],
-            startTime: '2020-01-01',
-            endTime: '2020-01-04',
+            // startTime: '2020-01-01',
+            // endTime: '2020-01-04',
             timeGrouping: 'DAY',
             data1: [],
             data2: []
@@ -52,7 +52,7 @@ export default class UC1 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data1: response.map((n) => n.MEDIAN)
+                    data1: response.map((n) => n.MEAN)
                 })
                 console.log('Data1', this.state.data1)
             },
@@ -70,7 +70,7 @@ export default class UC1 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data2: response.map((n) => n.MEDIAN)
+                    data2: response.map((n) => n.MEAN)
                 })
                 console.log('Data2', this.state.data2)
             },
