@@ -1,101 +1,70 @@
-import React from 'react';
-import { useState } from 'react'
-import '../../App.css';
+import React, { Component } from 'react'
+import Chart from 'react-apexcharts'
 
-
-
-import { Link } from 'react-router-dom';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import ApexCharts from 'apexcharts';
-import Chart from "react-apexcharts";
-//Chart.register(CategoryScale);
-
-
-const data = require('../../localhost.json');
-const nodeList = data.map(x => x.pnode_name);
-
-// Alex first push
-export default class Area extends React.Component {
+export default class AreaChart extends Component {
     constructor(props) {
-        super(props);
-        this.state = { node: '.I.KENT    345 2' };
+        super(props)
+        this.state = {
+            series: this.makeSeries(props)
+        }
     }
-    createGraphState() {
-        var optionsArea = {
-            options: {
-                chart: {
-                    height: 380,
-                    type: 'area',
-                    stacked: false,
-                },
-                stroke: {
-                    curve: 'smooth'
-                },
 
-                xaxis: {
-                    type: 'time',
-                    categories: ['00','01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
-                    
-                },
-                tooltip: {
-                    followCursor: true
-                },
-                fill: {
-                    opacity: 1,
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                yaxis: {
-                    title: {
-                        text: 'LMP'
-                    }
-                }
-            },
-            series: [{
-                name: "LMP of Scenario",
-                data: [11, 15, 26, 20, 33, 27, 24, 12, 34, 23, 10, 12, 23, 14, 22, 34, 45, 20, 18, 13, 12, 13, 15, 16]
+    makeSeries(props) {
+        return [
+            {
+                name: props.metric ?? 'Scenario 1', //scenario 1 and 2
+                data: props.data1
             },
             {
-                name: "LMP of Base Case",
-                data: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]
+                name: props.metric ?? 'Scenario 2', //scenario 1 and 2
+                data: props.data2
             }
-            ]
-
-        };
-
-        return optionsArea
+        ]
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ series: this.makeSeries(nextProps) })
+    }
+
     render() {
         return (
-            <div>
-                <div className="sub-header">
-                    {/* <Link className="App-link" to="/home">Go Home</Link> */}
-                    <div className="Alert">NOTE: this is dummy for a proof of concept</div>
-                </div>
-                <div className="title" >{this.state.node}</div>
-                <DropdownButton className="DropdownButton" title="DROP" >
-                    {nodeList.map(node =>
-                        <li key={node.toString()}>
-                            <Dropdown.Item className="DropdownItem" as="button" onClick={event => this.changeNode(event, node)}>
-                                {node}
-                            </Dropdown.Item>
-                        </li>
-                    )}
-                </DropdownButton>
-                <div></div>
-                <div id="chart">
-                    <Chart
-                        options={this.createGraphState().options}
-                        series={this.createGraphState().series}
-                        type="area"
-                        height={400}
-                    />
-                </div>
+            <div className="area">
+                <Chart
+                    options={{
+                        chart: {
+                            height: 350,
+                            type: 'area'
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            curve: 'smooth'
+                        },
+                        // xaxis: {
+                        //     type: 'datetime',
+                        //     //categories should be defined based on the state. use helper
+                        //     categories: [
+                        //         '2018-09-19T00:00:00.000Z',
+                        //         '2018-09-19T01:30:00.000Z',
+                        //         '2018-09-19T02:30:00.000Z',
+                        //         '2018-09-19T03:30:00.000Z',
+                        //         '2018-09-19T04:30:00.000Z',
+                        //         '2018-09-19T05:30:00.000Z',
+                        //         '2018-09-19T06:30:00.000Z'
+                        //     ]
+                        // },
+                        tooltip: {
+                            x: {
+                                format: 'dd/MM/yy HH:mm'
+                            }
+                        }
+                    }}
+                    series={this.state.series}
+                    type="area"
+                    width="500"
+                />
             </div>
-
-        );
+        )
     }
 }
