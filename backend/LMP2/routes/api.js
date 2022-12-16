@@ -131,9 +131,11 @@ let search = async (req, res, next) => {
             const mean = values.reduce((sum, val) => sum + val, 0) / values.length //For Mean and Standard Deviation calculation
             toRet.push({
                 TIME: timeGroup,
-                MEAN: mean,
-                MEDIAN: values.length % 2 != 0 ? values[mid] : (values[mid - 1] + values[mid]) / 2,
-                STD: values.reduce((sum, val) => Math.sqrt(sum ** 2 + (val - mean) ** 2), 0)
+                MEAN: Math.round(mean * 100) / 100,
+                MEDIAN:
+                    Math.round(values.length % 2 != 0 ? values[mid] : ((values[mid - 1] + values[mid]) / 2) * 100) /
+                    100,
+                STD: Math.round(values.reduce((sum, val) => Math.sqrt(sum ** 2 + (val - mean) ** 2), 0) * 100) / 100
             })
         })
     })
