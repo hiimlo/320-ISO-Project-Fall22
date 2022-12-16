@@ -31,7 +31,7 @@ export default class UC1 extends React.Component {
             scenario2: 1,
             scenarioList: [],
             startTime: '2020-01-01',
-            endTime: '2020-01-02',
+            endTime: '2020-01-10',
             data1: [],
             data2: []
             // api response should be expected to be arr_series1, arr_series2, and time range or something like that
@@ -88,12 +88,6 @@ export default class UC1 extends React.Component {
         )
     }
 
-    getChartData() {
-        this.updateData1()
-        this.updateData2()
-        return
-    }
-
     componentDidMount() {
         console.log('UC1 post-mount...')
         //console.log(this.state.scenario1, this.state.scenario2)
@@ -103,7 +97,8 @@ export default class UC1 extends React.Component {
                 scenarioList: response.SCENARIOS
             })
         })
-        this.getChartData()
+        this.updateData1()
+        this.setState({ data2: this.state.data1 })
         return
     }
 
