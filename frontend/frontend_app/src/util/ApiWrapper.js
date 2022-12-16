@@ -3,7 +3,7 @@ import axios from 'axios'
 export class ApiWrapper {
     static apiUrl = 'http://localhost:3000'
 
-    static async getData(nname, scenario, start, end) {
+    static async getDataRange(nname, scenario, start, end) {
         // console.log('getDatafromApiAsync')
         var queryString = '?'
         if (nname != null) {
@@ -24,14 +24,58 @@ export class ApiWrapper {
 
         console.log('fetching ' + ApiWrapper.apiUrl + '/node' + queryString)
         try {
+            const response = await axios.get(ApiWrapper.apiUrl + '/node' + queryString)
+            //console.log('response  ', response)
+            return response.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static async getData(nname, scenario = 1, sort, metric) {
+        var queryString = '?'
+        if (nname != null) {
+            queryString += 'id=' + encodeURIComponent(nname) + '&'
+        }
+        if (sort != null) {
+            queryString += 'sort=' + sort + '&'
+        }
+        if (metric != null) {
+            queryString += 'metric=' + metric
+        }
+        if (queryString.charAt(queryString.length - 1) === '&') {
+            queryString = queryString.slice(0, -1)
+        }
+        console.log('fetching ' + ApiWrapper.apiUrl + '/scenarios/' + scenario + '/nodes/PNODE_NAME' + queryString)
+        try {
             const response = await axios.get(
-                ApiWrapper.apiUrl + '/node' + queryString
+                ApiWrapper.apiUrl + '/scenarios/' + scenario + '/nodes/PNODE_NAME' + queryString
             )
             //console.log('response  ', response)
             return response.data
         } catch (error) {
             console.log(error)
         }
+        // ApiWrapper.getData(
+        //     //updates data1
+        //     this.state.node,
+        //     this.state.scenario1,
+        //     this.state.startTime,
+        //     this.state.endTime
+        // ).then(
+        //     (response) => {
+        //         this.setState({
+        //             isLoaded: true,
+        //             data1: response.map((n) => n.LMP)
+        //         })
+        //     },
+        //     (error) => {
+        //         this.setState({
+        //             isLoaded: true,
+        //             error: true
+        //         })
+        //     }
+        // )
     }
 
     static async getScenarios() {

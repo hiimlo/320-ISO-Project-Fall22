@@ -24,7 +24,7 @@ export default class UC1 extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            metric: '',
+            metric: 'LMP',
             node: 'UN.ALTA    345 UALT',
             nodeList: [],
             scenario1: 1,
@@ -32,6 +32,7 @@ export default class UC1 extends React.Component {
             scenarioList: [],
             startTime: '2020-01-01',
             endTime: '2020-01-04',
+            timeGrouping: 'DAY',
             data1: [],
             data2: []
             // api response should be expected to be arr_series1, arr_series2, and time range or something like that
@@ -40,22 +41,20 @@ export default class UC1 extends React.Component {
         //bindings (so that state is not undefined in first render())
         this.changeBaseCase = this.changeBaseCase.bind(this)
         this.changeOtherScenario = this.changeOtherScenario.bind(this)
+        this.changeTimeGrouping = this.changeTimeGrouping.bind(this)
         //this.changeNode = this.changeNode.bind(this);
     }
 
     updateData1() {
-        ApiWrapper.getData(
-            //updates data1
-            this.state.node,
-            this.state.scenario1,
-            this.state.startTime,
-            this.state.endTime
-        ).then(
+        //updates state.data1
+        console.log(this.state.timeGrouping)
+        ApiWrapper.getData(this.state.node, this.state.scenario1, this.state.timeGrouping, this.state.metric).then(
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data1: response.map((n) => n.LMP)
+                    data1: response.map((n) => n.MEDIAN)
                 })
+                console.log('Data1', this.state.data1)
             },
             (error) => {
                 this.setState({
@@ -66,18 +65,14 @@ export default class UC1 extends React.Component {
         )
     }
     updateData2() {
-        ApiWrapper.getData(
-            //updates data2
-            this.state.node,
-            this.state.scenario2,
-            this.state.startTime,
-            this.state.endTime
-        ).then(
+        //updates state.data2
+        ApiWrapper.getData(this.state.node, this.state.scenario2, this.state.timeGrouping, this.state.metric).then(
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data2: response.map((n) => n.LMP)
+                    data2: response.map((n) => n.MEDIAN)
                 })
+                console.log('Data2', this.state.data2)
             },
             (error) => {
                 this.setState({
@@ -102,16 +97,23 @@ export default class UC1 extends React.Component {
         return
     }
 
+    //EVENT HANDLERS
     changeBaseCase(event) {
         this.setState({ scenario1: event.target.value }, function () {
             // callback
             this.updateData1()
         })
     }
-
     changeOtherScenario(event) {
         this.setState({ scenario2: event.target.value }, function () {
             // callback
+            this.updateData2()
+        })
+    }
+    changeTimeGrouping(event) {
+        this.setState({ timeGrouping: event.target.value }, function () {
+            // callback
+            this.updateData1()
             this.updateData2()
         })
     }
@@ -123,10 +125,7 @@ export default class UC1 extends React.Component {
             <div>
                 <h1>hello world!</h1>
                 <h3>Base Case:</h3>
-                <select
-                    value={this.state.scenario1}
-                    onChange={this.changeBaseCase}
-                >
+                <select value={this.state.scenario1} onChange={this.changeBaseCase}>
                     {/* <option value={-1}>Please select scenario</option> */}
                     {this.state.scenarioList.map((s) => {
                         return (
@@ -137,10 +136,7 @@ export default class UC1 extends React.Component {
                     })}
                 </select>
                 <h3>Other Scenario:</h3>
-                <select
-                    value={this.state.scenario2}
-                    onChange={this.changeOtherScenario}
-                >
+                <select value={this.state.scenario2} onChange={this.changeOtherScenario}>
                     {this.state.scenarioList.map((s) => {
                         return (
                             <option key={s._id} value={s.SCENARIO_ID}>
@@ -150,16 +146,20 @@ export default class UC1 extends React.Component {
                     })}
                 </select>
 
-                <ScatterChart
-                    data1={this.state.data1}
-                    data2={this.state.data2}
-                    metric={this.state.metric}
-                />
-                <AreaChart
-                    data1={this.state.data1}
-                    data2={this.state.data2}
-                    metric={this.state.metric}
-                />
+                <label>
+                    Pick your time grouping:
+                    <select value={this.state.timeGrouping} onChange={this.changeTimeGrouping}>
+                        <option value="">Hour</option>
+                        <option value="DAY">Day</option>
+                        <option value="MONTH">Month</option>
+                        <option value="QUARTER">Quarter</option>
+                        <option value="YEAR">Year</option>
+                        <option value="ALL">All</option>
+                    </select>
+                </label>
+
+                <ScatterChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
+                <AreaChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
             </div>
         )
     }
