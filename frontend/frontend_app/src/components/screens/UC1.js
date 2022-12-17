@@ -25,7 +25,7 @@ export default class UC1 extends React.Component {
             error: null,
             isLoaded: false,
             metric: 'LMP',
-            node: 'UN.ALTA    345 UALT',
+            node: '.Z.NORTH',
             nodeList: [],
             scenario1: 1,
             scenario2: 1,
