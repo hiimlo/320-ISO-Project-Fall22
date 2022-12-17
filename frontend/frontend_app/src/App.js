@@ -1,17 +1,10 @@
 //import './App.css';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Routes,
-    Navigate
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Routes, Navigate } from 'react-router-dom'
 
-import Home from './components/screens/Home';
-import Graph from './components/screens/Graphs';
-import UC1 from './components/screens/UC1';
-import ShowData from './components/ShowData';
-import Stats from './components/screens/Stats';
+import Home from './components/screens/Home'
+import UC1 from './components/screens/UC1'
+import ShowData from './components/ShowData'
+import Stats from './components/screens/Stats'
 
 function App() {
     return (
@@ -24,11 +17,6 @@ function App() {
       with exact path "/", in component props 
       we passes the imported component*/}
                     <Route path="/home" element={<Home />} />
-
-                    {/* This route is for about component 
-      with exact path "/about", in component 
-      props we passes the imported component*/}
-                    <Route path="/graph" element={<Graph />} />
 
                     {/* This route is for about component 
       with exact path "/about", in component 
@@ -47,7 +35,7 @@ function App() {
                 </Routes>
             </Router>
         </>
-    );
+    )
 }
 
-export default App;
+export default App
