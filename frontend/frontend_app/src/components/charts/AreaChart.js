@@ -31,6 +31,7 @@ export default class AreaChart extends Component {
             <div className="area">
                 <Chart
                     options={{
+                        colors: ['#5E81AC', '#D08770'],
                         chart: {
                             height: 350,
                             type: 'area'

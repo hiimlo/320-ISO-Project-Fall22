@@ -30,6 +30,7 @@ export default class ScatterChart extends Component {
             <div className="scatter">
                 <Chart
                     options={{
+                        colors: ['#3B4252'],
                         chart: {
                             height: 350,
                             type: 'scatter',
