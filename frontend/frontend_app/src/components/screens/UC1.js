@@ -10,12 +10,12 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Heat from '../charts/HeatMap'
-import Histo from '../charts/Histogram'
 
 //NEW
 import AreaChart from '../charts/AreaChart'
 import ApiWrapper from '../../util/ApiWrapper'
 import ScatterChart from '../charts/ScatterChart'
+import HistogramChart from '../charts/HistogramChart'
 
 export default class UC1 extends React.Component {
     constructor() {
@@ -59,7 +59,6 @@ export default class UC1 extends React.Component {
                 nodeList: response
             })
         })
-        console.log(this.state.nodeList)
         this.updateData1()
         this.setState({ data2: this.state.data1 })
         return
@@ -162,6 +161,7 @@ export default class UC1 extends React.Component {
 
                 <ScatterChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
                 <AreaChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
+                <HistogramChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
             </div>
         )
     }
