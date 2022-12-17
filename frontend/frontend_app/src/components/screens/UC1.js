@@ -34,7 +34,8 @@ export default class UC1 extends React.Component {
             // endTime: '2020-01-04',
             timeGrouping: 'DAY',
             data1: [],
-            data2: []
+            data2: [],
+            timeSeries: [],
             // api response should be expected to be arr_series1, arr_series2, and time range or something like that
         }
 
@@ -52,7 +53,8 @@ export default class UC1 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data1: response.map((n) => n.MEAN)
+                    data1: response.map((n) => n.MEAN),
+                    timeSeries: response.map((n) => n.TIME)
                 })
                 console.log('Data1', this.state.data1)
             },
@@ -70,7 +72,8 @@ export default class UC1 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data2: response.map((n) => n.MEAN)
+                    data2: response.map((n) => n.MEAN),
+                    timeSeries: response.map((n) => n.TIME)
                 })
                 console.log('Data2', this.state.data2)
             },
@@ -99,7 +102,7 @@ export default class UC1 extends React.Component {
 
     //EVENT HANDLERS
     changeBaseCase(event) {
-        this.setState({ scenario1: event.target.value }, function () {
+        this.setState({ scenario1: event.target.value   }, function () {
             // callback
             this.updateData1()
         })
@@ -121,6 +124,19 @@ export default class UC1 extends React.Component {
     // chart wise, we want scatter, histo, heatmap, and area
     render() {
         console.log('rendering UC1...')
+        // console.log(this.state.scenarioList)
+        // console.log(this.state.scenario1)
+        // var scenario1List = this.state.scenarioList.filter((s) => s.SCENARIO_ID === this.state.scenario1)
+        // if (scenario1List.length > 0) {
+        //     this.state.scenario1Name = scenario1List[0].SCENARIO_NAME
+        //     console.log(this.state.scenario1Name)
+        // }
+        // console.log(this.state.scenario2)
+        // var scenario2List = this.state.scenarioList.filter((s) => s.SCENARIO_ID === this.state.scenario2)
+        // if (scenario2List.length > 0) {
+        //     this.state.scenario2Name = scenario2List[0].SCENARIO_NAME
+        //     console.log(this.state.scenario2Name)
+        // }
         return (
             <div>
                 <h1>hello world!</h1>
@@ -157,9 +173,16 @@ export default class UC1 extends React.Component {
                         <option value="ALL">All</option>
                     </select>
                 </label>
-
+                
                 <ScatterChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
-                <AreaChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
+                <AreaChart 
+                    data1={this.state.data1} 
+                    data2={this.state.data2} 
+                    metric={this.state.metric} 
+                    timeSeries={this.state.timeSeries}
+                    // scenario1Name={this.state.scenario1Name}
+                    // scenario2Name={this.state.scenario2Name}
+                />
             </div>
         )
     }
