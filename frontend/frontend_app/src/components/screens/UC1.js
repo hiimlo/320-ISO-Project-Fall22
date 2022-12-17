@@ -32,7 +32,7 @@ export default class UC1 extends React.Component {
             scenarioList: [],
             // startTime: '2020-01-01',
             // endTime: '2020-01-04',
-            timeGrouping: 'DAY',
+            timeGrouping: 'MONTH',
             data1: [],
             data2: []
         }
