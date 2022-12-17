@@ -35,7 +35,6 @@ export default class UC1 extends React.Component {
             timeGrouping: 'DAY',
             data1: [],
             data2: []
-            // api response should be expected to be arr_series1, arr_series2, and time range or something like that
         }
 
         //bindings (so that state is not undefined in first render())
@@ -153,7 +152,6 @@ export default class UC1 extends React.Component {
                 <label>
                     Pick your time grouping:
                     <select value={this.state.timeGrouping} onChange={this.changeTimeGrouping}>
-                        <option value="">Hour</option>
                         <option value="DAY">Day</option>
                         <option value="MONTH">Month</option>
                         <option value="QUARTER">Quarter</option>
