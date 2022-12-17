@@ -37,6 +37,12 @@ router.get('/node', async (req, res, next) => {
     }
 })
 
+//Get a list of all node names.
+router.get('/nodes', async (req, res, next) => {
+    const nodeNames = await Data.distinct('PNODE_NAME')
+    res.send(nodeNames)
+})
+
 // Gets all scenarios. BF - 3
 router.get('/scenarios', async (req, res, next) => {
     const scenarios = await Scenario.find({})
@@ -100,7 +106,7 @@ let search = async (req, res, next) => {
         nodes = { NODES: nodes } // For consistency
     }
 
-    toRet = []
+    toRet = {}
     //Groups the data by the given time grouping.
     _.forEach(Object.keys(nodes), (nodeGroup) => {
         nodes[nodeGroup] = _.groupBy(nodes[nodeGroup], function (node) {
@@ -123,33 +129,85 @@ let search = async (req, res, next) => {
             }
         })
 
+        nodeData = []
         //Performs aggregate functions on the choosen metric.
         _.forEach(Object.keys(nodes[nodeGroup]), (timeGroup) => {
             //Converts all the nodes to just the values specified by the give metric.
             const values = _.map(nodes[nodeGroup][timeGroup], (node) => node[metric]).sort((x, y) => x - y)
             const mid = Math.floor(values.length / 2) //For Median calculation
             const mean = values.reduce((sum, val) => sum + val, 0) / values.length //For Mean and Standard Deviation calculation
-            toRet.push({
+            nodeData.push({
                 TIME: timeGroup,
                 MEAN: Math.round(mean * 100) / 100,
-                MEDIAN:
-                    Math.round(values.length % 2 != 0 ? values[mid] : ((values[mid - 1] + values[mid]) / 2) * 100) /
-                    100,
+                MEDIAN: Math.round(values.length % 2 != 0 ? values[mid] : ((values[mid - 1] + values[mid]) / 2) * 100) / 100,
                 STD: Math.round(values.reduce((sum, val) => Math.sqrt(sum ** 2 + (val - mean) ** 2), 0) * 100) / 100
             })
         })
-    })
-    toRet = toRet.sort(function (a, b) {
-        var x = a.TIME
-        var y = b.TIME
-        return x < y ? -1 : x > y ? 1 : 0
+        nodeData = nodeData.sort(function (a, b) {
+            var x = a.TIME
+            var y = b.TIME
+            return x < y ? -1 : x > y ? 1 : 0
+        })
+        toRet[nodeGroup] = nodeData
     })
     //Finally sends the JSON object literal.
     res.send(toRet)
 }
 
+let search2 = async (req, res, next) => {
+    const metric = req.query.metric ?? 'LMP'
+    const sort = req.query.sort ?? 'NONE'
+    // const group = req.params.grouping
+    const nname = req.query.id ?? '.Z.NORTH' //.I.KENT++++345+2
+    const scenario_id = parseInt(req.params.id)
+
+    let node_data = await Data.findOne({ PNODE_NAME: nname })
+    node_data = node_data.TIME_SERIES.filter((e) => e.SCENARIO_ID === scenario_id)
+    // node_data = node_data.groupBy((e) => e.PNODE_NAME)
+    grouped_data = _.groupBy(node_data, (e) => {
+        const [year, mon, day, hour] = e.PERIOD_ID.toISOString().split(/[-T:]/)
+        const quarter = Math.floor((2 + parseInt(mon)) / 3)
+        switch (sort) {
+            case 'ALL':
+                return 'ALL'
+            case 'YEAR':
+                return `${year}`
+            case 'QUARTER':
+                return `${year}-Q${quarter}`
+            case 'MONTH':
+                return `${year}-${mon}`
+            case 'DAY':
+                return `${year}-${mon}-${day}`
+            default: //Hourly, uneditted
+                return year + '-' + mon + '-' + day + ': ' + hour
+        }
+    })
+
+    node_data = []
+    Object.keys(grouped_data).forEach((time) => {
+        const values = grouped_data[time].map((e) => e[metric])
+        const mid = Math.floor(values.length / 2) //For Median calculation
+        const mean = values.reduce((sum, val) => sum + val, 0) / values.length //For Mean and Standard Deviation calculation
+
+        node_data.push({
+            TIME: time,
+            MEAN: Math.round(mean * 100) / 100,
+            MEDIAN: Math.round(values.length % 2 != 0 ? values[mid] * 100 : ((values[mid - 1] + values[mid]) / 2) * 100) / 100,
+            STD: Math.round(values.reduce((sum, val) => Math.sqrt(sum ** 2 + (val - mean) ** 2), 0) * 100) / 100
+        })
+    })
+    node_data = node_data.sort(function (a, b) {
+        var x = a.TIME
+        var y = b.TIME
+        return x < y ? -1 : x > y ? 1 : 0
+    })
+    toRet = {}
+    toRet[nname] = node_data
+    res.send(toRet)
+}
+
 //For when no grouping criteria is specified, the entire dataset is treated as one group.
-router.get('/scenarios/:id/nodes', search)
-router.get('/scenarios/:id/nodes/:grouping', search)
+router.get('/scenarios/:id/nodes', search2)
+router.get('/scenarios/:id/nodes/:grouping', search2)
 
 module.exports = router

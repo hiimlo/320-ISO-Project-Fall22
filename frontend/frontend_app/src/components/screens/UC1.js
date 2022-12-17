@@ -10,12 +10,12 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Heat from '../charts/HeatMap'
-import Histo from '../charts/Histogram'
 
 //NEW
 import AreaChart from '../charts/AreaChart'
 import ApiWrapper from '../../util/ApiWrapper'
 import ScatterChart from '../charts/ScatterChart'
+import HistogramChart from '../charts/HistogramChart'
 
 export default class UC1 extends React.Component {
     constructor() {
@@ -25,18 +25,24 @@ export default class UC1 extends React.Component {
             error: null,
             isLoaded: false,
             metric: 'LMP',
-            node: 'UN.ALTA    345 UALT',
+            node: '.Z.NORTH',
             nodeList: [],
             scenario1: 1,
             scenario2: 1,
             scenarioList: [],
             // startTime: '2020-01-01',
             // endTime: '2020-01-04',
-            timeGrouping: 'DAY',
+            timeGrouping: 'MONTH',
             data1: [],
+<<<<<<< Updated upstream
+            data2: []
+=======
             data2: [],
             timeSeries: [],
-            // api response should be expected to be arr_series1, arr_series2, and time range or something like that
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         }
 
         //bindings (so that state is not undefined in first render())
@@ -46,17 +52,42 @@ export default class UC1 extends React.Component {
         //this.changeNode = this.changeNode.bind(this);
     }
 
+    componentDidMount() {
+        console.log('UC1 post-mount...')
+        //console.log(this.state.scenario1, this.state.scenario2)
+        ApiWrapper.getScenarios().then((response) => {
+            // getting scenario list...
+            this.setState({
+                scenarioList: response.SCENARIOS
+            })
+        })
+        ApiWrapper.getNodeList().then((response) => {
+            //getting node list...
+            this.setState({
+                nodeList: response
+            })
+        })
+        this.updateData1()
+        this.setState({ data2: this.state.data1 })
+        return
+    }
+
     updateData1() {
         //updates state.data1
-        console.log(this.state.timeGrouping)
         ApiWrapper.getData(this.state.node, this.state.scenario1, this.state.timeGrouping, this.state.metric).then(
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data1: response.map((n) => n.MEAN),
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+                    data1: response[this.state.node].map((n) => n.MEAN)
+=======
+=======
+>>>>>>> Stashed changes
+                    data1: response[this.state.node].map((n) => n.MEAN),
                     timeSeries: response.map((n) => n.TIME)
+>>>>>>> Stashed changes
                 })
-                console.log('Data1', this.state.data1)
             },
             (error) => {
                 this.setState({
@@ -72,10 +103,16 @@ export default class UC1 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data2: response.map((n) => n.MEAN),
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+                    data2: response[this.state.node].map((n) => n.MEAN)
+=======
+=======
+>>>>>>> Stashed changes
+                    data2: response[this.state.node].map((n) => n.MEAN),
                     timeSeries: response.map((n) => n.TIME)
+>>>>>>> Stashed changes
                 })
-                console.log('Data2', this.state.data2)
             },
             (error) => {
                 this.setState({
@@ -84,20 +121,6 @@ export default class UC1 extends React.Component {
                 })
             }
         )
-    }
-
-    componentDidMount() {
-        console.log('UC1 post-mount...')
-        //console.log(this.state.scenario1, this.state.scenario2)
-        //get list of scenarios for drop down
-        ApiWrapper.getScenarios().then((response) => {
-            this.setState({
-                scenarioList: response.SCENARIOS
-            })
-        })
-        this.updateData1()
-        this.setState({ data2: this.state.data1 })
-        return
     }
 
     //EVENT HANDLERS
@@ -165,7 +188,6 @@ export default class UC1 extends React.Component {
                 <label>
                     Pick your time grouping:
                     <select value={this.state.timeGrouping} onChange={this.changeTimeGrouping}>
-                        <option value="">Hour</option>
                         <option value="DAY">Day</option>
                         <option value="MONTH">Month</option>
                         <option value="QUARTER">Quarter</option>
@@ -175,6 +197,9 @@ export default class UC1 extends React.Component {
                 </label>
                 
                 <ScatterChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
+<<<<<<< Updated upstream
+                <AreaChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
+=======
                 <AreaChart 
                     data1={this.state.data1} 
                     data2={this.state.data2} 
@@ -183,6 +208,11 @@ export default class UC1 extends React.Component {
                     // scenario1Name={this.state.scenario1Name}
                     // scenario2Name={this.state.scenario2Name}
                 />
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+                <HistogramChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
             </div>
         )
     }

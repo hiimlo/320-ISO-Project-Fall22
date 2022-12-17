@@ -48,9 +48,7 @@ export class ApiWrapper {
         }
         console.log('fetching ' + ApiWrapper.apiUrl + '/scenarios/' + scenario + '/nodes/PNODE_NAME' + queryString)
         try {
-            const response = await axios.get(
-                ApiWrapper.apiUrl + '/scenarios/' + scenario + '/nodes/PNODE_NAME' + queryString
-            )
+            const response = await axios.get(ApiWrapper.apiUrl + '/scenarios/' + scenario + '/nodes/PNODE_NAME' + queryString)
             //console.log('response  ', response)
             return response.data
         } catch (error) {
@@ -78,10 +76,20 @@ export class ApiWrapper {
         // )
     }
 
+    static async getNodeList() {
+        try {
+            console.log('fetching ' + ApiWrapper.apiUrl + '/nodes')
+            const response = await axios.get(ApiWrapper.apiUrl + '/nodes')
+            return response.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     static async getScenarios() {
         // console.log('getScenarios')
         try {
-            console.log('fetching' + ApiWrapper.apiUrl + '/scenarios')
+            console.log('fetching ' + ApiWrapper.apiUrl + '/scenarios')
             const response = await axios.get(ApiWrapper.apiUrl + '/scenarios')
             return response.data
         } catch (error) {
