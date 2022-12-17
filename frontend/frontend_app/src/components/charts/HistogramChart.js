@@ -31,13 +31,7 @@ export default class HistogramChart extends Component {
             <div className="area">
                 <Chart
                     options={{
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
                         colors: ['#5E81AC', '#D08770'],
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                         chart: {
                             height: 350,
                             type: 'bar'

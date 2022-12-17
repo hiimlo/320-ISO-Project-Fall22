@@ -34,15 +34,8 @@ export default class UC1 extends React.Component {
             // endTime: '2020-01-04',
             timeGrouping: 'MONTH',
             data1: [],
-<<<<<<< Updated upstream
-            data2: []
-=======
             data2: [],
             timeSeries: [],
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         }
 
         //bindings (so that state is not undefined in first render())
@@ -78,15 +71,8 @@ export default class UC1 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    data1: response[this.state.node].map((n) => n.MEAN)
-=======
-=======
->>>>>>> Stashed changes
                     data1: response[this.state.node].map((n) => n.MEAN),
-                    timeSeries: response.map((n) => n.TIME)
->>>>>>> Stashed changes
+                    timeSeries: response[this.state.node].map((n) => n.TIME)
                 })
             },
             (error) => {
@@ -103,15 +89,8 @@ export default class UC1 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    data2: response[this.state.node].map((n) => n.MEAN)
-=======
-=======
->>>>>>> Stashed changes
                     data2: response[this.state.node].map((n) => n.MEAN),
-                    timeSeries: response.map((n) => n.TIME)
->>>>>>> Stashed changes
+                    timeSeries: response[this.state.node].map((n) => n.TIME)
                 })
             },
             (error) => {
@@ -197,9 +176,6 @@ export default class UC1 extends React.Component {
                 </label>
                 
                 <ScatterChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
-<<<<<<< Updated upstream
-                <AreaChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
-=======
                 <AreaChart 
                     data1={this.state.data1} 
                     data2={this.state.data2} 
@@ -208,10 +184,6 @@ export default class UC1 extends React.Component {
                     // scenario1Name={this.state.scenario1Name}
                     // scenario2Name={this.state.scenario2Name}
                 />
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                 <HistogramChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
             </div>
         )
