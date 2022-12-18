@@ -17,9 +17,15 @@ export default class StatsTable extends Component {
 
     //DATA TRANSFORMATION
     tabularizeData(props) {
-        console.log(props)
         return {
-            rows: [{ PERIOD_ID: '2020-01-01', MEAN: 1.0, MEDIAN: 2.0, STD: 3.0 }],
+            rows: props.map((e) => {
+                return {
+                    PERIOD_ID: e.TIME,
+                    MEAN: e.MEAN,
+                    MEDIAN: e.MEDIAN,
+                    STD: e.STD
+                }
+            }),
             columns: [
                 { title: 'PERIOD_ID', field: 'PERIOD_ID' },
                 { title: 'MEAN', field: 'MEAN', type: 'numeric' },

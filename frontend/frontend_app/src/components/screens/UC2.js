@@ -37,7 +37,7 @@ export default class UC2 extends React.Component {
             (response) => {
                 this.setState({
                     isLoaded: true,
-                    data: response[this.state.node].map((n) => n.MEAN)
+                    data: response[this.state.node]
                 })
             },
             (error) => {
@@ -118,7 +118,7 @@ export default class UC2 extends React.Component {
                     </select>
                 </label>
 
-                <AreaChart data1={this.state.data} metric={this.state.metric} />
+                <AreaChart data1={this.state.data.map((n) => n.MEAN)} metric={this.state.metric} />
                 <StatsTable data={this.state.data} />
             </div>
         )
