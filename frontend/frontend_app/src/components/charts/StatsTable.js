@@ -25,15 +25,18 @@ export default class StatsTable extends Component {
 
     render() {
         return (
-            <div style={{ maxWidth: 1000 }}>
-                <MaterialTable
-                    columns={this.state.columns}
-                    data={this.state.rows}
-                    title="Stats Table"
-                    icons={tableIcons}
-                    exportButton={true}
-                />
-            </div>
+            <MaterialTable
+                columns={this.state.columns}
+                data={this.state.rows}
+                title="Stats Table"
+                icons={tableIcons}
+                options={{
+                    exportButton: {
+                        csv: true,
+                        pdf: true
+                    }
+                }}
+            />
         )
     }
 }
