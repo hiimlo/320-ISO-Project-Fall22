@@ -6,11 +6,18 @@ export default class StatsTable extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: this.makeData(props.data)
+            data: this.tabularizeData(props.data)
         }
     }
 
-    makeData(props) {
+    //LIFECYCLE HOOKS
+    componentWillReceiveProps(nextProps) {
+        this.setState({ data: this.tabularizeData(nextProps.data) })
+    }
+
+    //DATA TRANSFORMATION
+    tabularizeData(props) {
+        console.log(props)
         return {
             rows: [{ PERIOD_ID: '2020-01-01', MEAN: 1.0, MEDIAN: 2.0, STD: 3.0 }],
             columns: [
