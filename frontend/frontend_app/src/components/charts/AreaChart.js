@@ -13,11 +13,11 @@ export default class AreaChart extends Component {
     makeSeries(props) {
         return [
             {
-                name: props.metric, 
+                name: props.scenario1Name, 
                 data: props.data1
             },
             {
-                name: props.metric,
+                name: props.scenario2Name,
                 data: props.data2
             }
         ]
