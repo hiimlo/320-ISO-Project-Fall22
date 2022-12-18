@@ -6,28 +6,27 @@ export default class StatsTable extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: this.makeData(props.data),
-            rows: [
-                { name: 'Mohammad', surname: 'Faisal', birthYear: 1995 },
-                { name: 'Nayeem Raihan ', surname: 'Shuvo', birthYear: 1994 }
-            ],
-            columns: [
-                { title: 'Name', field: 'name' },
-                { title: 'Surname', field: 'surname' },
-                { title: 'Birth Year', field: 'birthYear', type: 'numeric' }
-            ]
+            data: this.makeData(props.data)
         }
     }
 
     makeData(props) {
-        return []
+        return {
+            rows: [{ PERIOD_ID: '2020-01-01', MEAN: 1.0, MEDIAN: 2.0, STD: 3.0 }],
+            columns: [
+                { title: 'PERIOD_ID', field: 'PERIOD_ID' },
+                { title: 'MEAN', field: 'MEAN', type: 'numeric' },
+                { title: 'MEDIAN', field: 'MEDIAN', type: 'numeric' },
+                { title: 'STD', field: 'STD', type: 'numeric' }
+            ]
+        }
     }
 
     render() {
         return (
             <MaterialTable
-                columns={this.state.columns}
-                data={this.state.rows}
+                columns={this.state.data.columns}
+                data={this.state.data.rows}
                 title="Stats Table"
                 icons={tableIcons}
                 options={{
