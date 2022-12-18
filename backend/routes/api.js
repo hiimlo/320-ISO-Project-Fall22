@@ -193,7 +193,7 @@ let search2 = async (req, res, next) => {
             TIME: time,
             MEAN: Math.round(mean * 100) / 100,
             MEDIAN: Math.round(values.length % 2 != 0 ? values[mid] * 100 : ((values[mid - 1] + values[mid]) / 2) * 100) / 100,
-            STD: Math.round(values.reduce((sum, val) => Math.sqrt(sum ** 2 + (val - mean) ** 2), 0) * 100) / 100
+            STD: Math.round(Math.sqrt(values.reduce((sum, val) => sum + (val - mean) ** 2, 0) / values.length) * 100) / 100
         })
     })
     node_data = node_data.sort(function (a, b) {

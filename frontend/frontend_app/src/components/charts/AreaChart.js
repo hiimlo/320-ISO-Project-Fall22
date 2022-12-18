@@ -6,12 +6,12 @@ export default class AreaChart extends Component {
         super(props)
         this.state = {
             series: this.makeSeries(props),
-            timeSeries: props.timeSeries,
+            timeSeries: props.timeSeries
         }
     }
 
     makeSeries(props) {
-        return [
+        let data_series = [
             {
                 name: props.scenario1Name, 
                 data: props.data1
@@ -21,12 +21,19 @@ export default class AreaChart extends Component {
                 data: props.data2
             }
         ]
+        if (props.data2 !== undefined) {
+            data_series.push({
+                name: props.metric ?? 'Scenario 2', //scenario 1 and 2
+                data: props.data2
+            })
+        }
+        return data_series
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ 
-            series: this.makeSeries(nextProps), 
-            timeSeries: nextProps.timeSeries,
+        this.setState({
+            series: this.makeSeries(nextProps),
+            timeSeries: nextProps.timeSeries
         })
     }
 
@@ -47,10 +54,9 @@ export default class AreaChart extends Component {
                             curve: 'smooth'
                         },
                         xaxis: {
-                            
                             //categories should be defined based on the state. use helper
                             categories: this.state.timeSeries,
-                            tickAmount: 10,
+                            tickAmount: 10
                         },
                         tooltip: {
                             x: {
