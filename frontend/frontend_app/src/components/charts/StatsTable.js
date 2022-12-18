@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MaterialTable from 'material-table'
 import tableIcons from './MaterialTableIcons'
+import { CsvBuilder } from 'filefy'
 
 export default class StatsTable extends Component {
     constructor(props) {
@@ -45,7 +46,17 @@ export default class StatsTable extends Component {
                 options={{
                     exportButton: {
                         csv: true,
-                        pdf: true
+                        pdf: false
+                    },
+                    exportCsv: (columns, rows) => {
+                        const columnTitles = columns.map((c) => c.title)
+                        const csvData = rows.map((r) =>
+                            columnTitles.map((title) => {
+                                return r[title]
+                            })
+                        )
+                        const builder = new CsvBuilder(`stats.csv`).setColumns(columnTitles).addRows(csvData).exportFile()
+                        return builder
                     }
                 }}
             />
