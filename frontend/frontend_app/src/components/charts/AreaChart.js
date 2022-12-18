@@ -11,7 +11,7 @@ export default class AreaChart extends Component {
     }
 
     makeSeries(props) {
-        return [
+        let data_series = [
             {
                 name: props.metric, 
                 data: props.data1
@@ -21,6 +21,13 @@ export default class AreaChart extends Component {
                 data: props.data2
             }
         ]
+        if (props.data2 !== undefined) {
+            data_series.push({
+                name: props.metric ?? 'Scenario 2', //scenario 1 and 2
+                data: props.data2
+            })
+        }
+        return data_series
     }
 
     componentWillReceiveProps(nextProps) {
