@@ -95,6 +95,16 @@ export default class UC2 extends React.Component {
                         )
                     })}
                 </select>
+                <h3>Pick Node:</h3>
+                <select value={this.state.node} onChange={this.changeNode}>
+                    {this.state.nodeList.map((n) => {
+                        return (
+                            <option key={n} value={n}>
+                                {n}
+                            </option>
+                        )
+                    })}
+                </select>
 
                 <label>
                     Pick your time grouping:
