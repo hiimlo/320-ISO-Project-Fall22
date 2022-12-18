@@ -15,15 +15,11 @@ export default class AreaChart extends Component {
             {
                 name: props.scenario1Name, 
                 data: props.data1
-            },
-            {
-                name: props.scenario2Name,
-                data: props.data2
             }
         ]
         if (props.data2 !== undefined) {
             data_series.push({
-                name: props.metric ?? 'Scenario 2', //scenario 1 and 2
+                name: props.scenario2Name, //scenario 1 and 2
                 data: props.data2
             })
         }
