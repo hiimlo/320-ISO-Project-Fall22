@@ -5,6 +5,7 @@ import AreaChart from '../charts/AreaChart'
 import ApiWrapper from '../../util/ApiWrapper'
 import ScatterChart from '../charts/ScatterChart'
 import HistogramChart from '../charts/HistogramChart'
+import StatsTable from '../charts/StatsTable'
 
 export default class UC2 extends React.Component {
     constructor() {
@@ -118,6 +119,7 @@ export default class UC2 extends React.Component {
                 </label>
 
                 <AreaChart data1={this.state.data} metric={this.state.metric} />
+                <StatsTable data={this.state.data} />
             </div>
         )
     }
