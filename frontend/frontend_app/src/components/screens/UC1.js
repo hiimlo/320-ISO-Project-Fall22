@@ -9,13 +9,12 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Heat from '../charts/HeatMap'
-
 //NEW
 import AreaChart from '../charts/AreaChart'
 import ApiWrapper from '../../util/ApiWrapper'
 import ScatterChart from '../charts/ScatterChart'
 import HistogramChart from '../charts/HistogramChart'
+import HeatMap from '../charts/HeatMap'
 
 export default class UC1 extends React.Component {
     constructor() {
@@ -114,7 +113,7 @@ export default class UC1 extends React.Component {
                 name = list[0].SCENARIO_NAME
             }
             this.setState({ scenario1Name: name })
-            console.log("Base Case Has Changed")
+            console.log('Base Case Has Changed')
         }
         if (prevState.scenario2 !== this.state.scenario2) {
             const self = this
@@ -125,7 +124,7 @@ export default class UC1 extends React.Component {
                 name = list[0].SCENARIO_NAME
             }
             this.setState({ scenario2Name: name })
-            console.log("Other Scenario Has Changed")
+            console.log('Other Scenario Has Changed')
         }
     }
 
@@ -134,7 +133,7 @@ export default class UC1 extends React.Component {
         console.log(event.target.value)
         this.setState({ scenario1: event.target.value }, function () {
             // callback
-            this.updateData1();
+            this.updateData1()
         })
     }
     changeOtherScenario(event) {
@@ -200,6 +199,7 @@ export default class UC1 extends React.Component {
                     scenario2Name={this.state.scenario2Name}
                 />
                 <HistogramChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
+                <HeatMap></HeatMap>
             </div>
         )
     }
