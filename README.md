@@ -1,9 +1,9 @@
 # 320-ISO-Project-Fall22
-Full stack web application for reporting on bulk LMP datasets.
+Full stack web application for reporting on bulk LMP datasets across different scnenarios and nodes
 
 
 ### Notes for Installation and Use
-In order to install and use our application, make sure to have npm installed and have downloaded the .env  file in the deliverables. (.env not included here for security)
+In order to install and use our application, make sure to have npm installed and have downloaded the `.env`  file in the deliverables report. (`.env` not included here for security)
 
 ## Installation 
 Clone the GitHub repository using the following command
@@ -17,13 +17,13 @@ Clone the GitHub repository using the following command
 
 ## Running the Application
 1. `npm start`
-2. `control c (^c) or whatever your OS shutdown key is` enjoy!
+2. enjoy! Ctrl-C in the command line to stop.
 
 ### Data Loading
-The app will make GET requests to the database defined by the `DB_URI` property your `.env` file (the database provided is already populated). If you wish to plug in your own data, simply replace the csv files in `backend/dummy-data` with new csv files that have column format. Then, run `backend/dataloading_script.py` to run a script that loads in all the new data from the csv into the mongo database. 
+The app will make GET requests to the database defined by the `DB_URI` property in your `.env` file (the database provided is already populated). If you wish to plug in your own data, simply replace the csv files in `backend/dummy-data` with new csv files that have the same column names. Then, run `backend/dataloading_script.py` to run a script that loads in all the new data from the csv into the mongo database. 
 
 ### Modular Backend
-If for some reason a new backend is desired, as long as API calls can be made following the api contract in docs, a new backend can be swapped in by replacing the backend folder and updating the startup script in package.json
+This application uses its own database. If for some reason a new database is desired, as long as API calls can be made following the api contract in docs, a new backend can be swapped in by replacing the backend folder and updating the startup script in package.json
 
 ## About
 This project was a joint collaboration between ISO New Engand and students of CS320 at UMass. See the documentation pdf for contact details and more info.
