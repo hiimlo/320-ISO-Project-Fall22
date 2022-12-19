@@ -18,6 +18,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "material-table": "^1.69.3",
+    "mongoose": "^6.8.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.5.0",
@@ -28,7 +29,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently --names 'backend,frontend' --prefix-colors 'yellow,blue' --kill-others \"node ../backend/app.js\" \"react-scripts start\"",
+    "start": "concurrently --names 'backend,frontend' --prefix-colors 'yellow,blue' --kill-others \"node backend/app.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

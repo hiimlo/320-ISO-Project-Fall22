@@ -106,7 +106,7 @@ let search = async (req, res, next) => {
         nodes = { NODES: nodes } // For consistency
     }
 
-    toRet = {}
+    let toRet = {}
     //Groups the data by the given time grouping.
     _.forEach(Object.keys(nodes), (nodeGroup) => {
         nodes[nodeGroup] = _.groupBy(nodes[nodeGroup], function (node) {
@@ -129,7 +129,7 @@ let search = async (req, res, next) => {
             }
         })
 
-        nodeData = []
+        let nodeData = []
         //Performs aggregate functions on the choosen metric.
         _.forEach(Object.keys(nodes[nodeGroup]), (timeGroup) => {
             //Converts all the nodes to just the values specified by the give metric.
@@ -164,7 +164,7 @@ let search2 = async (req, res, next) => {
     let node_data = await Data.findOne({ PNODE_NAME: nname })
     node_data = node_data.TIME_SERIES.filter((e) => e.SCENARIO_ID === scenario_id)
     // node_data = node_data.groupBy((e) => e.PNODE_NAME)
-    grouped_data = _.groupBy(node_data, (e) => {
+    let grouped_data = _.groupBy(node_data, (e) => {
         const [year, mon, day, hour] = e.PERIOD_ID.toISOString().split(/[-T:]/)
         const quarter = Math.floor((2 + parseInt(mon)) / 3)
         switch (sort) {
@@ -201,7 +201,7 @@ let search2 = async (req, res, next) => {
         var y = b.TIME
         return x < y ? -1 : x > y ? 1 : 0
     })
-    toRet = {}
+    let toRet = {}
     toRet[nname] = node_data
     res.send(toRet)
 }
