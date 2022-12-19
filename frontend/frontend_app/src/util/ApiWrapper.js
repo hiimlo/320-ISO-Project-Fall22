@@ -54,26 +54,32 @@ export class ApiWrapper {
         } catch (error) {
             console.log(error)
         }
-        // ApiWrapper.getData(
-        //     //updates data1
-        //     this.state.node,
-        //     this.state.scenario1,
-        //     this.state.startTime,
-        //     this.state.endTime
-        // ).then(
-        //     (response) => {
-        //         this.setState({
-        //             isLoaded: true,
-        //             data1: response.map((n) => n.LMP)
-        //         })
-        //     },
-        //     (error) => {
-        //         this.setState({
-        //             isLoaded: true,
-        //             error: true
-        //         })
-        //     }
-        // )
+    }
+
+    static async getHeatmapData(s1, s2, nname, metric) {
+        var queryString = '?'
+        if (s1 != null) {
+            queryString += 's1=' + s1 + '&'
+        }
+        if (s2 != null) {
+            queryString += 's2=' + s2 + '&'
+        }
+        if (nname != null) {
+            queryString += 'nname=' + encodeURIComponent(nname) + '&'
+        }
+        if (metric != null) {
+            queryString += 'metric=' + metric
+        }
+        if (queryString.charAt(queryString.length - 1) === '&') {
+            queryString = queryString.slice(0, -1)
+        }
+        try {
+            console.log('fetching ' + ApiWrapper.apiUrl + '/heatmap' + queryString)
+            const response = await axios.get(ApiWrapper.apiUrl + '/heatmap' + queryString)
+            return response.data
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     static async getNodeList() {

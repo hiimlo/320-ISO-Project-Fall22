@@ -206,6 +206,76 @@ let search2 = async (req, res, next) => {
     res.send(toRet)
 }
 
+router.get('/heatmap', async (req, res, next) => {
+    const metric = req.query.metric ?? 'LMP'
+    const nname = req.query.nname ?? '.Z.NORTH' //.I.KENT++++345+2
+    const scenario_id_1 = parseInt(req.query.s1)
+    const scenario_id_2 = parseInt(req.query.s2)
+
+    const node_data = await Data.findOne({ PNODE_NAME: nname })
+    let s1_data = _.groupBy(
+        node_data.TIME_SERIES.filter((e) => e.SCENARIO_ID === scenario_id_1),
+        (e) => {
+            return e.PERIOD_ID.toISOString()
+        }
+    )
+    Object.keys(s1_data).forEach((time) => {
+        s1_data[time] = s1_data[time][0][metric]
+    })
+    let s2_data = _.groupBy(
+        node_data.TIME_SERIES.filter((e) => e.SCENARIO_ID === scenario_id_2),
+        (e) => {
+            return e.PERIOD_ID.toISOString()
+        }
+    )
+    Object.keys(s2_data).forEach((time) => {
+        s2_data[time] = s2_data[time][0][metric]
+    })
+
+    let matrixMap = {}
+    Object.keys(s1_data).forEach((time) => {
+        // conditional cuz can only calculate APE if it exists in other scenario
+        if (time in s2_data) {
+            matrixMap[time] = Math.abs(Math.round(((s1_data[time] - s2_data[time]) / s1_data[time]) * 100 * 100) / 100)
+        }
+    })
+
+    // need hour to hour APE, then take MAX
+    let matrix = []
+    for (var i = 0; i < 24; i++) {
+        matrix[i] = []
+        for (var j = 0; j < 12; j++) {
+            matrix[i][j] = []
+        }
+    }
+
+    // pushing each point to the matrix based on (month, hour) combination
+    Object.keys(matrixMap).forEach((time) => {
+        let [year, mon, day, hour] = time.split(/[-T:]/)
+        mon = parseInt(mon) - 1
+        hour = parseInt(hour)
+        matrix[hour][mon].push(matrixMap[time])
+    })
+
+    matrix = matrix.map((row) => {
+        return row.map((col) => {
+            if (col.length == 0) {
+                return col
+            }
+            let max = 0
+            let absMax = 0
+            col.forEach((e) => {
+                if (Math.abs(e) > absMax) {
+                    max = e
+                }
+            })
+            return max
+        })
+    })
+
+    res.send(matrix)
+})
+
 //For when no grouping criteria is specified, the entire dataset is treated as one group.
 router.get('/scenarios/:id/nodes', search2)
 router.get('/scenarios/:id/nodes/:grouping', search2)
