@@ -25,7 +25,6 @@ export default class ScatterChart extends Component {
     }
 
     render() {
-        //console.log('scatter chart data', this.state.series[0].data)
         return (
             <div className="scatter">
                 <Chart

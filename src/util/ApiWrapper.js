@@ -1,10 +1,9 @@
 import axios from 'axios'
 
-export class ApiWrapper {
+export default class ApiWrapper {
     static apiUrl = 'http://localhost:3000'
 
     static async getDataRange(nname, scenario, start, end) {
-        // console.log('getDatafromApiAsync')
         var queryString = '?'
         if (nname != null) {
             queryString += 'nname=' + encodeURIComponent(nname) + '&'
@@ -25,7 +24,6 @@ export class ApiWrapper {
         console.log('fetching ' + ApiWrapper.apiUrl + '/node' + queryString)
         try {
             const response = await axios.get(ApiWrapper.apiUrl + '/node' + queryString)
-            //console.log('response  ', response)
             return response.data
         } catch (error) {
             console.log(error)
@@ -49,7 +47,6 @@ export class ApiWrapper {
         console.log('fetching ' + ApiWrapper.apiUrl + '/scenarios/' + scenario + '/nodes/PNODE_NAME' + queryString)
         try {
             const response = await axios.get(ApiWrapper.apiUrl + '/scenarios/' + scenario + '/nodes/PNODE_NAME' + queryString)
-            //console.log('response  ', response)
             return response.data
         } catch (error) {
             console.log(error)
@@ -93,7 +90,6 @@ export class ApiWrapper {
     }
 
     static async getScenarios() {
-        // console.log('getScenarios')
         try {
             console.log('fetching ' + ApiWrapper.apiUrl + '/scenarios')
             const response = await axios.get(ApiWrapper.apiUrl + '/scenarios')
@@ -103,4 +99,3 @@ export class ApiWrapper {
         }
     }
 }
-export default ApiWrapper

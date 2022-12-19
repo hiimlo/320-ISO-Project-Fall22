@@ -39,19 +39,6 @@ export default class HistogramChart extends Component {
                         dataLabels: {
                             enabled: false
                         }
-                        // xaxis: {
-                        //     type: 'datetime',
-                        //     //categories should be defined based on the state. use helper
-                        //     categories: [
-                        //         '2018-09-19T00:00:00.000Z',
-                        //         '2018-09-19T01:30:00.000Z',
-                        //         '2018-09-19T02:30:00.000Z',
-                        //         '2018-09-19T03:30:00.000Z',
-                        //         '2018-09-19T04:30:00.000Z',
-                        //         '2018-09-19T05:30:00.000Z',
-                        //         '2018-09-19T06:30:00.000Z'
-                        //     ]
-                        // },
                     }}
                     series={this.state.series}
                     type="bar"
