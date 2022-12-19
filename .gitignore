@@ -1,3 +1,5 @@
 node_modules
 dummy-data
 .env
+.DS_Store
+.prettierrc
