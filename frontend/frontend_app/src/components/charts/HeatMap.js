@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Chart from 'react-apexcharts'
+const _ = require('lodash')
 
 export default class HeatMap extends Component {
     constructor(props) {
@@ -21,26 +22,41 @@ export default class HeatMap extends Component {
                 <Chart
                     options={{
                         chart: {
-                            height: 350,
+                            height: 'auto',
+                            width: 'auto',
                             type: 'heatmap'
                         },
-                        plotOptions: {
-                            heatmap: {
-                                shadeIntensity: 0.5,
-                                radius: 0,
-                                useFillColorAsStroke: true,
-                                colorScale: {
-                                    ranges: [
-                                        {
-                                            from: -30,
-                                            to: 5,
-                                            name: 'low',
-                                            color: '#00A100'
-                                        }
-                                    ]
-                                }
-                            }
-                        },
+                        // plotOptions: {
+                        //     heatmap: {
+                        //         //reverseNegativeShade: true,
+                        //         shadeIntensity: 0.5,
+                        //         radius: 0,
+                        //         useFillColorAsStroke: true,
+                        //         colorScale: {
+                        //             ranges: [
+                        //                 {
+                        //                     from: 0,
+                        //                     to: 50,
+                        //                     name: 'MAPE',
+                        //                     color: '#4599D3'
+                        //                 },
+                        //                 {
+                        //                     from: 50,
+                        //                     to: 100,
+                        //                     name: 'MAPE',
+                        //                     color: '#eb3434'
+                        //                 }
+                        //                 // {
+                        //                 //     from: 7.5,
+                        //                 //     to: 15,
+                        //                 //     name: 'MAPE',
+                        //                 //     color: '#eb3434'
+                        //                 // }
+                        //             ]
+                        //         }
+                        //     }
+                        // },
+                        colors: ['#eb3434'],
                         dataLabels: {
                             enabled: false
                         },
@@ -49,11 +65,14 @@ export default class HeatMap extends Component {
                         },
                         title: {
                             text: 'HeatMap Chart with Color Range'
+                        },
+                        xaxis: {
+                            categories: _.range(1, 13)
                         }
                     }}
-                    series={this.state.data.map((row) => {
+                    series={this.state.data.map((row, i) => {
                         return {
-                            name: 'NAME',
+                            name: i,
                             data: row
                         }
                     })}
