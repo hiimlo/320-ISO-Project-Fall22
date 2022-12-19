@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const _ = require('lodash')
 
-const Scenario = require('../schemas/dummyScenarios')
-const Data = require('../schemas/dummyNodes')
-const Group = require('../schemas/dummyGroups')
+const Scenario = require('./schemas/dummyScenarios')
+const Data = require('./schemas/dummyNodes')
+const Group = require('./schemas/dummyGroups')
 const { values } = require('lodash')
 
 // general endpoint
