@@ -59,13 +59,13 @@ export class ApiWrapper {
     static async getHeatmapData(s1, s2, nname, metric) {
         var queryString = '?'
         if (s1 != null) {
-            queryString += 'id=' + s1 + '&'
+            queryString += 's1=' + s1 + '&'
         }
         if (s2 != null) {
-            queryString += 'id=' + s2 + '&'
+            queryString += 's2=' + s2 + '&'
         }
         if (nname != null) {
-            queryString += 'id=' + encodeURIComponent(nname) + '&'
+            queryString += 'nname=' + encodeURIComponent(nname) + '&'
         }
         if (metric != null) {
             queryString += 'metric=' + metric

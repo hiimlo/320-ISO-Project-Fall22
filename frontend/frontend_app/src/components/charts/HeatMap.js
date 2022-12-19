@@ -9,6 +9,12 @@ export default class HeatMap extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            data: nextProps.data
+        })
+    }
+
     render() {
         return (
             <div id="heatmap">
@@ -30,24 +36,6 @@ export default class HeatMap extends Component {
                                             to: 5,
                                             name: 'low',
                                             color: '#00A100'
-                                        },
-                                        {
-                                            from: 6,
-                                            to: 20,
-                                            name: 'medium',
-                                            color: '#128FD9'
-                                        },
-                                        {
-                                            from: 21,
-                                            to: 45,
-                                            name: 'high',
-                                            color: '#FFB200'
-                                        },
-                                        {
-                                            from: 46,
-                                            to: 55,
-                                            name: 'extreme',
-                                            color: '#FF0000'
                                         }
                                     ]
                                 }
@@ -63,16 +51,12 @@ export default class HeatMap extends Component {
                             text: 'HeatMap Chart with Color Range'
                         }
                     }}
-                    series={[
-                        {
-                            name: 'Jan',
-                            data: [1, 2, 3]
-                        },
-                        {
-                            name: 'Feb',
-                            data: [1, 2, 3]
+                    series={this.state.data.map((row) => {
+                        return {
+                            name: 'NAME',
+                            data: row
                         }
-                    ]}
+                    })}
                     type="heatmap"
                     height={400}
                 />
@@ -80,4 +64,3 @@ export default class HeatMap extends Component {
         )
     }
 }
-//Graph.register(CategoryScale);
