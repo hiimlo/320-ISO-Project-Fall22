@@ -1,9 +1,7 @@
-//import './App.css';
-import { BrowserRouter as Router, Switch, Route, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 
 import Home from './components/screens/Home'
 import UC1 from './components/screens/UC1'
-import ShowData from './components/ShowData'
 import UC2 from './components/screens/UC2'
 
 function App() {

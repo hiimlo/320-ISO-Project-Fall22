@@ -1,5 +1,4 @@
 import isologo from '../../images/ISO Logo clear.png'
-//import logo from './images/logo.svg';
 import '../../App.css'
 import { Link } from 'react-router-dom'
 
@@ -9,14 +8,14 @@ function Home() {
             <div className="App-header">
                 <img src={isologo} className="iso-App-logo" alt="logo" />
 
-                <p className="title">Hello Team. Here's the landing page for our project.</p>
+                <p className="title">Welcome</p>
                 <br></br>
                 <div className="stackRow">
                     <Link className="App-link" to="/uc1">
-                        Graph
+                        Sanity Check
                     </Link>
                     <Link className="App-link" to="/uc2">
-                        Stats
+                        Report on a Scenario
                     </Link>
                 </div>
             </div>
