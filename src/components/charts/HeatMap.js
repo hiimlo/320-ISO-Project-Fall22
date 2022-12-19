@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Chart from 'react-apexcharts'
+import { CsvBuilder } from 'filefy'
 const _ = require('lodash')
 
 export default class HeatMap extends Component {
@@ -25,6 +26,21 @@ export default class HeatMap extends Component {
                             height: 'auto',
                             width: 'auto',
                             type: 'heatmap'
+                        },
+                        toolbar: {
+                            export: {
+                                csv: {
+                                    headerCategory: 'Date;Time',
+                                    columnDelimiter: ';',
+                                    dateFormatter: function (timestamp) {
+                                        // var date = dayjs(new Date(timestamp));
+                                        // var format = 'ddd D. MMM;HH:mm'  // sic: Delimiter in here on purpose
+                                        // var nextHour = Number(date.hour()) + 1;
+                                        // var text = date.format(format) + ' - ' + nextHour + ':00';
+                                        return 'text'
+                                    }
+                                }
+                            }
                         },
                         // plotOptions: {
                         //     heatmap: {
@@ -64,7 +80,7 @@ export default class HeatMap extends Component {
                             width: 1
                         },
                         title: {
-                            text: 'HeatMap Chart with Color Range'
+                            text: 'Max Absolute Percent Error per Month, Hour'
                         },
                         xaxis: {
                             categories: _.range(1, 13)
