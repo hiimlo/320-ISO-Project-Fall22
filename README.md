@@ -11,20 +11,20 @@ Clone the GitHub repository using the following command
 
 
 Navigate to /backend, execute the following command and paste a copy of the .env file
-% npm i
+	% npm i
 
 
 Navigate to /frontend/frontend_app, execute the following command and paste a copy of the .env file
-% npm i
+	% npm i
 
 
 
 Running the Application
 Navigate to /frontend/frontend_app
 Execute the following command in terminal
-% npm start
+	% npm start
 
-	When this command is run, the application starts a script which
+When this command is run, the application starts a script which
 Navigates to the /backend and starts the backend server
 Navigates back to the /frontend, starts the frontend server and displays the website 
 		
