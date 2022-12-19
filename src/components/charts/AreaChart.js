@@ -13,7 +13,7 @@ export default class AreaChart extends Component {
     makeSeries(props) {
         let data_series = [
             {
-                name: props.scenario1Name, 
+                name: props.scenario1Name,
                 data: props.data1
             }
         ]
@@ -34,37 +34,54 @@ export default class AreaChart extends Component {
     }
 
     render() {
-        return (
-            <div className="area">
-                <Chart
-                    options={{
-                        colors: ['#5E81AC', '#D08770'],
-                        chart: {
-                            height: 350,
-                            type: 'area'
-                        },
-                        dataLabels: {
-                            enabled: false
-                        },
-                        stroke: {
-                            curve: 'smooth'
-                        },
-                        xaxis: {
-                            //categories should be defined based on the state. use helper
-                            categories: this.state.timeSeries,
-                            tickAmount: 10
-                        },
-                        tooltip: {
-                            x: {
-                                format: 'dd/MM/yy HH:mm'
+        if (this.state.series[0].data.length > 1000) {
+            return (
+                <div>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <h3>
+                        Area chart can only display up to 1000 points, you are trying to display{' '}
+                        {this.state.series[0].data.length}
+                    </h3>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </div>
+            )
+        } else {
+            return (
+                <div className="area">
+                    <Chart
+                        options={{
+                            colors: ['#5E81AC', '#D08770'],
+                            chart: {
+                                height: 350,
+                                type: 'area'
+                            },
+                            dataLabels: {
+                                enabled: false
+                            },
+                            stroke: {
+                                curve: 'smooth'
+                            },
+                            xaxis: {
+                                //categories should be defined based on the state. use helper
+                                categories: this.state.timeSeries,
+                                tickAmount: 10
+                            },
+                            tooltip: {
+                                x: {
+                                    format: 'dd/MM/yy HH:mm'
+                                }
                             }
-                        }
-                    }}
-                    series={this.state.series}
-                    type="area"
-                    width="500"
-                />
-            </div>
-        )
+                        }}
+                        series={this.state.series}
+                        type="area"
+                        width="500"
+                    />
+                </div>
+            )
+        }
     }
 }

@@ -84,51 +84,51 @@ export default class UC2 extends React.Component {
     render() {
         console.log('rendering UC2...')
         return (
-            <div className = "contain">
-            <div className="sub-header">
-            <Link className="App-link" to="/home">Go Home</Link>
-             </div>
-            <div>
-              
-            <div className = "center">
-                <h3>Pick Scenario:</h3>
-                <select value={this.state.scenario} onChange={this.changeScenario}>
-                    {this.state.scenarioList.map((s) => {
-                        return (
-                            <option key={s._id} value={s.SCENARIO_ID}>
-                                {s.SCENARIO_NAME}
-                            </option>
-                        )
-                    })}
-                </select>
-                <h3>Pick Node:</h3>
-                <select value={this.state.node} onChange={this.changeNode}>
-                    {this.state.nodeList.map((n) => {
-                        return (
-                            <option key={n} value={n}>
-                                {n}
-                            </option>
-                        )
-                    })}
-                </select>
-
-                <label>
-                    Pick your time grouping:
-                    <select value={this.state.timeGrouping} onChange={this.changeTimeGrouping}>
-                        <option value="DAY">Day</option>
-                        <option value="MONTH">Month</option>
-                        <option value="QUARTER">Quarter</option>
-                        <option value="YEAR">Year</option>
-                        <option value="ALL">All</option>
-                    </select>
-                </label>
-                
-                <AreaChart data1={this.state.data.map((n) => n.MEAN)} metric={this.state.metric} />
+            <div className="contain">
+                <div className="sub-header">
+                    <Link className="App-link" to="/home">
+                        Go Home
+                    </Link>
                 </div>
-                <StatsTable data={this.state.data} />
+                <div>
+                    <div className="center">
+                        <h3>Pick Scenario:</h3>
+                        <select value={this.state.scenario} onChange={this.changeScenario}>
+                            {this.state.scenarioList.map((s) => {
+                                return (
+                                    <option key={s._id} value={s.SCENARIO_ID}>
+                                        {s.SCENARIO_NAME}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                        <h3>Pick Node:</h3>
+                        <select value={this.state.node} onChange={this.changeNode}>
+                            {this.state.nodeList.map((n) => {
+                                return (
+                                    <option key={n} value={n}>
+                                        {n}
+                                    </option>
+                                )
+                            })}
+                        </select>
+
+                        <label>
+                            Pick your time grouping:
+                            <select value={this.state.timeGrouping} onChange={this.changeTimeGrouping}>
+                                <option value="HOUR">Hour</option>
+                                <option value="DAY">Day</option>
+                                <option value="MONTH">Month</option>
+                                <option value="QUARTER">Quarter</option>
+                                <option value="YEAR">Year</option>
+                                <option value="ALL">All</option>
+                            </select>
+                        </label>
+                        <AreaChart data1={this.state.data.map((n) => n.MEAN)} metric={this.state.metric} />
+                    </div>
+                    <StatsTable data={this.state.data} />
+                </div>
             </div>
-            
-        </div>
         )
     }
 }
