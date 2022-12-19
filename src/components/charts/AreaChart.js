@@ -13,13 +13,13 @@ export default class AreaChart extends Component {
     makeSeries(props) {
         let data_series = [
             {
-                name: props.scenario1Name, 
+                name: props.scenario1Name,
                 data: props.data1
             }
         ]
         if (props.data2 !== undefined) {
             data_series.push({
-                name: props.scenario2Name, //scenario 1 and 2
+                name: props.scenario2Name,
                 data: props.data2
             })
         }

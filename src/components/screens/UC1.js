@@ -1,15 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
 import '../../App.css'
-// import { Scatter } from 'react-chartjs-2';
-
-import Chart from 'react-apexcharts'
-import { Link } from 'react-router-dom'
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
-//NEW
 import AreaChart from '../charts/AreaChart'
 import ApiWrapper from '../../util/ApiWrapper'
 import ScatterChart from '../charts/ScatterChart'
@@ -18,7 +9,6 @@ import HeatMap from '../charts/HeatMap'
 
 export default class UC1 extends React.Component {
     constructor() {
-        //super(props);
         super()
         this.state = {
             error: null,
@@ -49,7 +39,6 @@ export default class UC1 extends React.Component {
 
     componentDidMount() {
         console.log('UC1 post-mount...')
-        //console.log(this.state.scenario1, this.state.scenario2)
         ApiWrapper.getScenarios().then((response) => {
             // getting scenario list...
             this.setState({
@@ -105,6 +94,7 @@ export default class UC1 extends React.Component {
         )
     }
     updateHeatmapData() {
+        // updates state.heatmapData
         ApiWrapper.getHeatmapData(this.state.scenario1, this.state.scenario2, this.state.node, this.state.metric).then(
             (response) => {
                 this.setState({
@@ -170,7 +160,6 @@ export default class UC1 extends React.Component {
         })
     }
 
-    // chart wise, we want scatter, histo, heatmap, and area
     render() {
         console.log('rendering UC1...')
         return (
@@ -178,7 +167,6 @@ export default class UC1 extends React.Component {
                 <h1>hello world!</h1>
                 <h3>Base Case:</h3>
                 <select value={this.state.scenario1} onChange={this.changeBaseCase}>
-                    {/* <option value={-1}>Please select scenario</option> */}
                     {this.state.scenarioList.map((s) => {
                         return (
                             <option key={s._id} value={s.SCENARIO_ID}>

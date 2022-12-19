@@ -3,13 +3,10 @@ import '../../App.css'
 
 import AreaChart from '../charts/AreaChart'
 import ApiWrapper from '../../util/ApiWrapper'
-import ScatterChart from '../charts/ScatterChart'
-import HistogramChart from '../charts/HistogramChart'
 import StatsTable from '../charts/StatsTable'
 
 export default class UC2 extends React.Component {
     constructor() {
-        //super(props);
         super()
         this.state = {
             error: null,
@@ -32,7 +29,6 @@ export default class UC2 extends React.Component {
     }
 
     updateData() {
-        //updates state.data1
         ApiWrapper.getData(this.state.node, this.state.scenario, this.state.timeGrouping, this.state.metric).then(
             (response) => {
                 this.setState({
@@ -51,7 +47,6 @@ export default class UC2 extends React.Component {
 
     componentDidMount() {
         console.log('UC2 post-mount...')
-        //console.log(this.state.scenario1, this.state.scenario2)
         ApiWrapper.getScenarios().then((response) => {
             // getting scenario list...
             this.setState({
@@ -79,7 +74,6 @@ export default class UC2 extends React.Component {
         this.setState({ node: event.target.value }, () => this.updateData())
     }
 
-    // chart wise, we want scatter, histo, heatmap, and area
     render() {
         console.log('rendering UC2...')
         return (
