@@ -3,7 +3,7 @@ Full stack web application for reporting on bulk LMP datasets across different s
 
 
 ### Notes for Installation and Use
-In order to install and use our application, make sure to have npm installed and have downloaded the `.env`  file in the deliverables report. (`.env` not included here for security)
+In order to install and use our application, make sure to have npm installed and have downloaded the `.env`  file in the deliverables. (`.env` not included here for security)
 
 ## Installation 
 Clone the GitHub repository using the following command
