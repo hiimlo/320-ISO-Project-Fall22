@@ -34,6 +34,7 @@ export default class UC1 extends React.Component {
             timeGrouping: 'MONTH',
             data1: [],
             data2: [],
+            heatmapData: [],
             timeSeries: [],
             scenario1Name: 'Base Case',
             scenario2Name: 'Base Case'
@@ -63,6 +64,7 @@ export default class UC1 extends React.Component {
         })
         this.updateData1()
         this.setState({ data2: this.state.data1 })
+        this.updateHeatmapData()
         return
     }
 
@@ -92,6 +94,22 @@ export default class UC1 extends React.Component {
                     isLoaded: true,
                     data2: response[this.state.node].map((n) => n.MEAN),
                     timeSeries: response[this.state.node].map((n) => n.TIME)
+                })
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error: true
+                })
+            }
+        )
+    }
+    updateHeatmapData() {
+        ApiWrapper.getHeatmapData(this.state.scenario1, this.state.scenario2, this.state.node, this.state.metric).then(
+            (response) => {
+                this.setState({
+                    isLoaded: true,
+                    heatmapData: response
                 })
             },
             (error) => {
@@ -134,12 +152,14 @@ export default class UC1 extends React.Component {
         this.setState({ scenario1: event.target.value }, function () {
             // callback
             this.updateData1()
+            this.updateHeatmapData()
         })
     }
     changeOtherScenario(event) {
         this.setState({ scenario2: event.target.value }, function () {
             // callback
             this.updateData2()
+            this.updateHeatmapData()
         })
     }
     changeTimeGrouping(event) {
@@ -199,7 +219,7 @@ export default class UC1 extends React.Component {
                     scenario2Name={this.state.scenario2Name}
                 />
                 <HistogramChart data1={this.state.data1} data2={this.state.data2} metric={this.state.metric} />
-                <HeatMap></HeatMap>
+                <HeatMap data={this.state.heatmapData} />
             </div>
         )
     }

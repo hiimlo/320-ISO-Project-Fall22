@@ -4,7 +4,9 @@ import Chart from 'react-apexcharts'
 export default class HeatMap extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            data: props.data
+        }
     }
 
     render() {

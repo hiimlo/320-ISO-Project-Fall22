@@ -208,7 +208,7 @@ let search2 = async (req, res, next) => {
 
 router.get('/heatmap', async (req, res, next) => {
     const metric = req.query.metric ?? 'LMP'
-    const nname = req.query.id ?? '.Z.NORTH' //.I.KENT++++345+2
+    const nname = req.query.nname ?? '.Z.NORTH' //.I.KENT++++345+2
     const scenario_id_1 = parseInt(req.query.s1)
     const scenario_id_2 = parseInt(req.query.s2)
 
