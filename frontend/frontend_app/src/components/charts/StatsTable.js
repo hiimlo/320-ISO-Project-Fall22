@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MaterialTable from 'material-table'
-import tableIcons from './MaterialTableIcons'
+import tableIcons from '../../util/MaterialTableIcons'
 import { CsvBuilder } from 'filefy'
 
 export default class StatsTable extends Component {
