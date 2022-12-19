@@ -236,7 +236,7 @@ router.get('/heatmap', async (req, res, next) => {
     Object.keys(s1_data).forEach((time) => {
         // conditional cuz can only calculate APE if it exists in other scenario
         if (time in s2_data) {
-            matrixMap[time] = Math.round(((s1_data[time] - s2_data[time]) / s1_data[time]) * 100 * 100) / 100
+            matrixMap[time] = Math.abs(Math.round(((s1_data[time] - s2_data[time]) / s1_data[time]) * 100 * 100) / 100)
         }
     })
 
