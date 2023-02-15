@@ -10,8 +10,9 @@ Clone the GitHub repository using the following command
 
 	git clone https://github.com/hiimlo/320-ISO-Project-Fall22.git
 
-1. Once the project is cloned, navigate to its directory on your local machine. Paste the `.env` file into the root of the cloned directory (i.e. `/320-ISO-Project-Fall22`).
-2. From the same directory, run the command `npm i --force`
+1. Once the project is cloned, navigate to its directory on your local machine. Paste the provided `.env` file into the root of the cloned directory (i.e. `/320-ISO-Project-Fall22`). This file should already be in `.gitignore`
+2. From the same directory, run the command `npm i --force` to install JS packages
+3. From the same directory, run the command `pip install -r requirements.txt` to install python packages
 
 
 
