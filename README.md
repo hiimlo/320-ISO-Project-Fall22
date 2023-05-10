@@ -29,6 +29,46 @@ This application uses its own database. If for some reason a new database is des
 ## About
 This project was a joint collaboration between ISO New Engand and students of CS320 at UMass. See the documentation pdf for contact details and more info.
 
+Contributors to the project 
+
+**CS429 Project Management**
+
+@hiimlo Lo 
+
+Provided structure and guidance in team meetings where members created stories, refined the backlog, and participated in two week sprints (JIRA). Weekly SCRUMs were held to assess progress and to ensure that the project was able to get to the MVP.
+
+**CS320 Software Engineering**
+
+_Frontend_
+
+@ajnguy Alex
+
+@AACcodes Ayush
+
+@jamesrcarney James
+
+@dvaykhanskiy-umass David
+
+@Savannah-Arimento Savannah
+
+
+Members primarily used React.js, HTML, and CSS to build the frontend, and got experience using React Routers to create a multi page web app. Part of the project requirements required data visualizations. Members in the front end researched different libraries to use and ultimately decided on Apex Charts. Rest API calls were made to the backend in order to retrieve the data to display. Overall a well designed and solid front end was created. (Note: members had little to no experience using React prior to this, and picked it up very quickly!)
+
+_Backend_
+
+@Victorapple Victor
+
+@jbredd Joshua
+
+@MaanasPeri23 Maanas
+
+@tai-dang11 Tai
+
+
+Members of the backend team took some time researching what database to use, and selected one that fit the needs of the customer, being MongoDB. Paired with Mongoose for object data modeling, they were able to start taking given CSV files and move the data to the database. Using ExpressJS, members also created API endpoints for the front end to call and receive JSON responses. There was a need for filtering based on input provided by the front end, and members were successfully able to filter and provide the needed data. This teams backend was the fastest and most capable in the class! (Note: members in the backend also had little to no prior experience, and also picked up the tech stack very quickly!)
+
+Both the frontend and the backend were built on top of Node.js
+
 
 ## License
 
